@@ -1,0 +1,206 @@
+{
+  "log": {
+    "level": "info",
+    "timestamp": true
+  },
+  "experimental": {
+    "cache_file": {
+      "enabled": true,
+      "store_fakeip": true,
+      "store_rdrc": true
+    }
+  },
+  "dns": {
+    "fakeip": {
+      "enabled": true,
+      "inet4_range": "198.18.0.0/15",
+      "inet6_range": "fc00::/18"
+    },
+    "servers": [
+      {
+        "tag": "Bypass",
+        "address": "h3://1.1.1.1/dns-query",
+        "detour": "Bypass"
+      },
+      {
+        "tag": "DIRECT",
+        "address": "quic://223.5.5.5",
+        "detour": "DIRECT"
+      },
+      {
+        "tag": "FakeIP",
+        "address": "fakeip"
+      },
+      {
+        "tag": "REJECT",
+        "address": "rcode://success"
+      }
+    ],
+    "rules": [
+      {
+        "outbound": "any",
+        "server": "DIRECT"
+      },
+      {
+        "query_type": [
+          "A",
+          "AAAA"
+        ],
+        "rule_set": "China",
+        "server": "FakeIP"
+      },
+      {
+        "rule_set": "China",
+        "server": "DIRECT"
+      },
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "rule_set": "Global",
+            "invert": true
+          },
+          {
+            "rule_set": "ChinaIPs"
+          }
+        ],
+        "server": "Bypass",
+        "client_subnet": "114.114.114.114/24"
+      },
+      {
+        "query_type": [
+          "A",
+          "AAAA"
+        ],
+        "server": "FakeIP"
+      }
+    ],
+    "independent_cache": true
+  },
+  "inbounds": [
+    {
+      "type": "tun",
+      "inet4_address": "172.19.0.1/30",
+      "inet6_address": "fdfe:dcba:9876::1/126",
+      "auto_route": true,
+      "strict_route": true
+    }
+  ],
+  "outbounds": [
+    {
+      "tag": "Bypass",
+      "type": "selector",
+      "outbounds": ["Automatic", "Manual"],
+      "default": "Automatic"
+    },
+    {
+      "tag": "Automatic",
+      "type": "urltest",
+      "outbounds": []
+    },
+    {
+      "tag": "Manual",
+      "type": "selector",
+      "outbounds": ["DIRECT"]
+    },
+    {
+      "tag": "AI",
+      "type": "selector",
+      "outbounds": []
+    },
+    {
+      "tag": "China",
+      "type": "selector",
+      "outbounds": ["Bypass", "DIRECT"],
+      "default": "DIRECT"
+    },
+    {
+      "tag": "Final",
+      "type": "selector",
+      "outbounds": ["Bypass", "DIRECT"],
+      "default": "Bypass"
+    },
+    {
+      "tag": "DIRECT",
+      "type": "direct"
+    },
+    {
+      "tag": "DNS",
+      "type": "dns"
+    },
+    {
+      "tag": "REJECT",
+      "type": "block"
+    }
+  ],
+  "route": {
+    "auto_detect_interface": true,
+    "final": "Final",
+    "rules": [
+      {
+        "type": "logical",
+        "mode": "or",
+        "rules": [
+          {
+            "port": 53
+          },
+          {
+            "protocol": "dns"
+          }
+        ],
+        "outbound": "DNS"
+      },
+      {
+        "rule_set": ["Private", "PrivateIPs"],
+        "outbound": "DIRECT"
+      },
+      {
+        "rule_set": ["AI"],
+        "outbound": "AI"
+      },
+      {
+        "rule_set": ["China", "ChinaIPs"],
+        "outbound": "China"
+      }
+    ],
+    "rule_set": [
+      {
+        "tag": "AI",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset/ai.srs"
+      },
+      {
+        "tag": "Private",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/private.srs"
+      },
+      {
+        "tag": "PrivateIPs",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/private.srs"
+      },
+      {
+        "tag": "Global",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/geolocation-!cn.srs"
+      },
+      {
+        "tag": "China",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/cn.srs"
+      },
+      {
+        "tag": "ChinaIPs",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cn.srs"
+      }
+    ]
+  }
+}
