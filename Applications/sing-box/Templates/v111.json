@@ -36,7 +36,7 @@
         {"tag": "US","type": "urltest","outbounds": [],"url": "http://1.1.1.1/generate_204","interval": "10m","tolerance": 0,"interrupt_exist_connections": false},
         {"tag": "SG","type": "urltest","outbounds": [],"url": "http://1.1.1.1/generate_204","interval": "10m","tolerance": 0,"interrupt_exist_connections": false},
         {"tag": "JP","type": "urltest","outbounds": [],"url": "http://1.1.1.1/generate_204","interval": "10m","tolerance": 0,"interrupt_exist_connections": false},
-        {"tag": "TW","type": "urltest","outbounds": [],"url": "http://1.1.1.1/generate_204","interval": "10m","tolerance": 0,"interrupt_exist_connections": false}
+        {"tag": "TW","type": "urltest","outbounds": [],"url": "http://1.1.1.1/generate_204","interval": "10m","tolerance": 0,"interrupt_exist_connections": false},
         {"tag": "KR","type": "urltest","outbounds": [],"url": "http://1.1.1.1/generate_204","interval": "10m","tolerance": 0,"interrupt_exist_connections": false}
     ],
     "route": {
