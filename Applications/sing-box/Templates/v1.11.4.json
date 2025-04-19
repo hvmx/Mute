@@ -1,14 +1,14 @@
 {
     "dns": {
         "servers": [
-            {"tag": "cloudflare","address": "https://1.1.1.1/dns-query","detour": "Relay"},
+            {"tag": "cloudflare","address": "https://1.1.1.1/dns-query","detour": "GLOBAL"},
             {"tag": "ali","address": "223.5.5.5","detour": "DIRECT"},
             {"tag": "remote_fakeip","address": "fakeip"}
         ],
         "rules": [
             {"outbound": "any","server": "ali"},
-            {"clash_mode": "Global Direct","action": "route","server": "ali"},
-            {"clash_mode": "Global Proxy","action": "route","server": "remote_fakeip"},
+            {"clash_mode": "Direct","action": "route","server": "ali"},
+            {"clash_mode": "Global","action": "route","server": "remote_fakeip"},
             {"query_type": "HTTPS","action": "reject"},
             {"query_type": ["A","AAAA"],"action": "route","server": "remote_fakeip","rewrite_ttl": 1},
             {"rule_set": ["ChinaDomain","Apple"],"action": "route","server": "ali"}
@@ -21,16 +21,17 @@
         {"tag": "DIRECT","type": "direct"},
         {"tag": "Main","type": "selector", "outbounds": []},
         {"tag": "Budget","type": "selector", "outbounds": []},
-        {"tag": "Relay","type": "selector","outbounds": ["Main","Budget","HK","US","SG","JP","TW", "KR"],"default": "Budget","interrupt_exist_connections": true},
-        {"tag": "AI","type": "selector","outbounds": ["Relay","KR","US","SG","JP","TW"],"default": "Relay","interrupt_exist_connections": true},
-        {"tag": "GitHub","type": "selector","outbounds": ["Relay", "DIRECT"],"default": "Relay","interrupt_exist_connections": true},
-        {"tag": "Google","type": "selector","outbounds": ["Relay","HK","US","SG","JP","TW", "KR"],"default": "Relay","interrupt_exist_connections": true},
-        {"tag": "Microsoft","type": "selector","outbounds": ["Relay", "DIRECT"],"default": "DIRECT","interrupt_exist_connections": true},
-        {"tag": "Speedtest","type": "selector","outbounds": ["Relay", "DIRECT"],"default": "DIRECT","interrupt_exist_connections": true},
-        {"tag": "Spotify","type": "selector","outbounds": ["Relay", "HK","US","SG","JP","TW", "KR","DIRECT"],"default": "Relay","interrupt_exist_connections": true},
-        {"tag": "TikTok","type": "selector","outbounds": ["Relay", "HK","US","SG","JP","TW", "KR"],"default": "Relay","interrupt_exist_connections": true},
+        {"tag": "GLOBAL","type": "selector","outbounds": ["Main","Budget","HK","US","SG","JP","TW", "KR"],"default": "Budget","interrupt_exist_connections": true},
+        {"tag": "FINAL","type": "selector","outbounds": ["GLOBAL", "DIRECT"],"default": "GLOBAL","interrupt_exist_connections": true},
+        {"tag": "AI","type": "selector","outbounds": ["GLOBAL","KR","US","SG","JP","TW"],"default": "GLOBAL","interrupt_exist_connections": true},
+        {"tag": "GitHub","type": "selector","outbounds": ["GLOBAL", "DIRECT"],"default": "GLOBAL","interrupt_exist_connections": true},
+        {"tag": "Google","type": "selector","outbounds": ["GLOBAL","HK","US","SG","JP","TW", "KR"],"default": "GLOBAL","interrupt_exist_connections": true},
+        {"tag": "Microsoft","type": "selector","outbounds": ["GLOBAL", "DIRECT"],"default": "DIRECT","interrupt_exist_connections": true},
+        {"tag": "Speedtest","type": "selector","outbounds": ["GLOBAL", "DIRECT"],"default": "DIRECT","interrupt_exist_connections": true},
+        {"tag": "Spotify","type": "selector","outbounds": ["GLOBAL", "HK","US","SG","JP","TW", "KR","DIRECT"],"default": "GLOBAL","interrupt_exist_connections": true},
+        {"tag": "TikTok","type": "selector","outbounds": ["GLOBAL", "HK","US","SG","JP","TW", "KR"],"default": "GLOBAL","interrupt_exist_connections": true},
     
-        {"tag": "Final","type": "selector","outbounds": ["Relay", "DIRECT"],"default": "Relay","interrupt_exist_connections": true},
+
 
         {"tag": "HK","type": "urltest","outbounds": [],"url": "http://1.1.1.1/generate_204","interval": "10m","tolerance": 0,"interrupt_exist_connections": false},
         {"tag": "US","type": "urltest","outbounds": [],"url": "http://1.1.1.1/generate_204","interval": "10m","tolerance": 0,"interrupt_exist_connections": false},
@@ -59,22 +60,22 @@
             {"action": "sniff","sniffer": ["http","tls","quic","dns"],"timeout": "500ms"},
             {"type": "logical","mode": "or","rules": [{"port": 53},{"protocol": "dns"}],"action": "hijack-dns"},
             {"ip_is_private": true,"action": "route","outbound": "DIRECT"},
-            {"clash_mode": "Global Direct","action": "route","outbound": "DIRECT"},
-            {"clash_mode": "Global Proxy","action": "route","outbound": "Relay"},
+            {"clash_mode": "Direct","action": "route","outbound": "DIRECT"},
+            {"clash_mode": "Global","action": "route","outbound": "GLOBAL"},
             {"rule_set": ["AI"],"action": "route","outbound": "AI"},
             {"rule_set": ["YouTube","Google"],"action": "route","outbound": "Google"},
             {"rule_set": ["GitHub"],"action": "route","outbound": "GitHub"},
             {"rule_set": ["Microsoft"],"action": "route","outbound": "Microsoft"},
             {"rule_set": ["Speedtest"],"action": "route","outbound": "Speedtest"},
             {"rule_set": ["Spotify"],"action": "route","outbound": "Spotify"},
-            {"rule_set": ["Telegram"],"action": "route","outbound": "Relay"},
+            {"rule_set": ["Telegram"],"action": "route","outbound": "GLOBAL"},
             {"rule_set": ["TikTok"],"action": "route","outbound": "TikTok"},
-            {"rule_set": ["X"],"action": "route","outbound": "Relay"},
+            {"rule_set": ["X"],"action": "route","outbound": "GLOBAL"},
             {"action": "resolve"},
             {"rule_set": ["ChinaDomain","ChinaIP","Apple"],"action": "route","outbound": "DIRECT"}
         ],
         "auto_detect_interface": true,
-        "final": "Final"
+        "final": "FINAL"
     },
     "log": {
         "disabled": false,
@@ -92,7 +93,7 @@
             "external_controller": "127.0.0.1:9090",
             "external_ui": "ui",
             "external_ui_download_url": "https://git.repcz.link/github.com/Zephyruso/zashboard/releases/latest/download/dist.zip",
-            "external_ui_download_detour": "Relay"
+            "external_ui_download_detour": "GLOBAL"
         }
     },
     "inbounds": [
