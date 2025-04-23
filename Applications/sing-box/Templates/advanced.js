@@ -23,9 +23,9 @@ config.outbounds.map(i => {
   if (['Main'].includes(i.tag)) {
     i.outbounds.push(...getTags(proxies))
   }
-  if (['Budget'].includes(i.tag)) {
-    i.outbounds.push(...getTags(proxies, /0\.\d+倍/))
-  }
+  // if (['Budget'].includes(i.tag)) {
+  //   i.outbounds.push(...getTags(proxies, /0\.\d+倍/))
+  // }
   if (['HK'].includes(i.tag)) {
     i.outbounds.push(...getTags(proxies, /香港(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
   }

@@ -20,8 +20,7 @@
     "outbounds": [
         {"tag": "DIRECT","type": "direct"},
         {"tag": "Main","type": "selector", "outbounds": []},
-        {"tag": "Budget","type": "selector", "outbounds": []},
-        {"tag": "GLOBAL","type": "selector","outbounds": ["Main","Budget","HK","US","SG","JP","TW", "KR"],"default": "Budget","interrupt_exist_connections": true},
+        {"tag": "GLOBAL","type": "selector","outbounds": ["Main","HK","US","SG","JP","TW", "KR"],"default": "Main","interrupt_exist_connections": true},
         {"tag": "FINAL","type": "selector","outbounds": ["GLOBAL", "DIRECT"],"default": "GLOBAL","interrupt_exist_connections": true},
         {"tag": "AI","type": "selector","outbounds": ["GLOBAL","KR","US","SG","JP","TW"],"default": "GLOBAL","interrupt_exist_connections": true},
         {"tag": "GitHub","type": "selector","outbounds": ["GLOBAL", "DIRECT"],"default": "GLOBAL","interrupt_exist_connections": true},
@@ -30,7 +29,7 @@
         {"tag": "Speedtest","type": "selector","outbounds": ["GLOBAL", "DIRECT"],"default": "DIRECT","interrupt_exist_connections": true},
         {"tag": "Spotify","type": "selector","outbounds": ["GLOBAL", "HK","US","SG","JP","TW", "KR","DIRECT"],"default": "GLOBAL","interrupt_exist_connections": true},
         {"tag": "TikTok","type": "selector","outbounds": ["GLOBAL", "HK","US","SG","JP","TW", "KR"],"default": "GLOBAL","interrupt_exist_connections": true},
-    
+        {"tag": "X","type": "selector","outbounds": ["GLOBAL", "HK","US","SG","JP","TW", "KR"],"default": "GLOBAL","interrupt_exist_connections": true},
 
 
         {"tag": "HK","type": "urltest","outbounds": [],"url": "http://1.1.1.1/generate_204","interval": "10m","tolerance": 0,"interrupt_exist_connections": false},
@@ -70,7 +69,7 @@
             {"rule_set": ["Spotify"],"action": "route","outbound": "Spotify"},
             {"rule_set": ["Telegram"],"action": "route","outbound": "GLOBAL"},
             {"rule_set": ["TikTok"],"action": "route","outbound": "TikTok"},
-            {"rule_set": ["X"],"action": "route","outbound": "GLOBAL"},
+            {"rule_set": ["X"],"action": "route","outbound": "X"},
             {"action": "resolve"},
             {"rule_set": ["ChinaDomain","ChinaIP","Apple"],"action": "route","outbound": "DIRECT"}
         ],
