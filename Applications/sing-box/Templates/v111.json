@@ -292,6 +292,7 @@
             {
                 "tag": "Games",
                 "type": "remote",
+                "format": "binary",
                 "url": "https://git.repcz.link/raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-category-games@cn.srs",
                 "download_detour": "DIRECT"
             },
