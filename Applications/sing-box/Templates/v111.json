@@ -129,6 +129,21 @@
             "interrupt_exist_connections": true
         },
         {
+            "tag": "LOCAL",
+            "type": "selector",
+            "outbounds": [
+                "GLOBAL",
+                "KR",
+                "US",
+                "SG",
+                "JP",
+                "TW",
+                "DIRECT"
+            ],
+            "default": "DIRECT",
+            "interrupt_exist_connections": true
+        },
+        {
             "tag": "AI",
             "type": "selector",
             "outbounds": [
@@ -288,6 +303,12 @@
     "route": {
         "rule_set": [
             {
+                "type": "local",
+                "tag": "LOCAL",
+                "format": "source",
+                "path": "RuleSet/local.json"
+            },
+            {
                 "tag": "AI",
                 "type": "remote",
                 "format": "binary",
@@ -423,6 +444,13 @@
                 "clash_mode": "Global",
                 "action": "route",
                 "outbound": "GLOBAL"
+            },
+            {
+                "rule_set": [
+                    "LOCAL"
+                ],
+                "action": "route",
+                "outbound": "LOCAL"
             },
             {
                 "rule_set": [
