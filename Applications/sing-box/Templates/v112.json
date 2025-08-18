@@ -1,0 +1,540 @@
+{
+    "log": {
+        "level": "info",
+        "output": "sing-box.log",
+        "timestamp": true
+    },
+    "experimental": {
+        "cache_file": {
+            "enabled": true,
+            "store_fakeip": true
+        },
+        "clash_api": {
+            "default_mode": "Rule",
+            "external_controller": "127.0.0.1:9090",
+            "external_ui": "ui",
+            "external_ui_download_url": "https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip",
+            "external_ui_download_detour": "GitHub"
+        }
+    },
+    "dns": {
+        "servers": [
+            {
+                "tag": "cloudflare",
+                "type": "https",
+                "server": "1.1.1.1",
+                "detour": "GLOBAL"
+            },
+            {
+                "tag": "ali",
+                "type": "https",
+                "server": "223.6.6.6"
+            },
+            {
+                "tag": "fakeip",
+                "type": "fakeip",
+                "inet4_range": "198.18.0.0/15",
+                "inet6_range": "fc00::/18"
+            }
+        ],
+        "rules": [
+            {
+                "clash_mode": "Direct",
+                "action": "route",
+                "server": "ali"
+            },
+            {
+                "clash_mode": "Global",
+                "action": "route",
+                "server": "cloudflare"
+            },
+            {
+                "query_type": [
+                    "A",
+                    "AAAA"
+                ],
+                "action": "route",
+                "server": "fakeip"
+            },
+            {
+                "rule_set": [
+                    "Apple",
+                    "ChinaDomain",
+                    "Steam@CN"
+                ],
+                "action": "route",
+                "server": "ali"
+            }
+        ],
+        "final": "cloudflare",
+        "independent_cache": true,
+        "strategy": "prefer_ipv4"
+    },
+    "inbounds": [
+        {
+            "type": "tun",
+            "tag": "tun-in",
+            "interface_name": "tun0",
+            "address": [
+                "172.18.0.1/30",
+                "fdfe:dcba:9876::1/126"
+            ],
+            "stack": "system",
+            "auto_route": true
+        }
+    ],
+    "outbounds": [
+        {
+            "tag": "DIRECT",
+            "type": "direct"
+        },
+        {
+            "tag": "Main",
+            "type": "selector",
+            "outbounds": []
+        },
+        {
+            "tag": "GLOBAL",
+            "type": "selector",
+            "outbounds": [
+                "Main",
+                "HK",
+                "US",
+                "SG",
+                "JP",
+                "TW",
+                "KR"
+            ],
+            "default": "JP",
+            "interrupt_exist_connections": true
+        },
+        {
+            "tag": "FINAL",
+            "type": "selector",
+            "outbounds": [
+                "GLOBAL",
+                "DIRECT"
+            ],
+            "default": "GLOBAL",
+            "interrupt_exist_connections": true
+        },
+        {
+            "tag": "LOCAL",
+            "type": "selector",
+            "outbounds": [
+                "GLOBAL",
+                "KR",
+                "US",
+                "SG",
+                "JP",
+                "TW",
+                "DIRECT"
+            ],
+            "default": "DIRECT",
+            "interrupt_exist_connections": true
+        },
+        {
+            "tag": "AI",
+            "type": "selector",
+            "outbounds": [
+                "GLOBAL",
+                "KR",
+                "US",
+                "SG",
+                "JP",
+                "TW"
+            ],
+            "default": "GLOBAL",
+            "interrupt_exist_connections": true
+        },
+        {
+            "tag": "Steam",
+            "type": "selector",
+            "outbounds": [
+                "GLOBAL",
+                "KR",
+                "US",
+                "SG",
+                "JP",
+                "TW",
+                "DIRECT"
+            ],
+            "default": "GLOBAL",
+            "interrupt_exist_connections": true
+        },
+        {
+            "tag": "GitHub",
+            "type": "selector",
+            "outbounds": [
+                "GLOBAL",
+                "DIRECT"
+            ],
+            "default": "GLOBAL",
+            "interrupt_exist_connections": true
+        },
+        {
+            "tag": "Google",
+            "type": "selector",
+            "outbounds": [
+                "GLOBAL",
+                "HK",
+                "US",
+                "SG",
+                "JP",
+                "TW",
+                "KR"
+            ],
+            "default": "HK",
+            "interrupt_exist_connections": true
+        },
+        {
+            "tag": "Microsoft",
+            "type": "selector",
+            "outbounds": [
+                "GLOBAL",
+                "HK",
+                "US",
+                "SG",
+                "JP",
+                "TW",
+                "KR",
+                "DIRECT"
+            ],
+            "default": "DIRECT",
+            "interrupt_exist_connections": true
+        },
+        {
+            "tag": "Speedtest",
+            "type": "selector",
+            "outbounds": [
+                "GLOBAL",
+                "DIRECT"
+            ],
+            "default": "DIRECT",
+            "interrupt_exist_connections": true
+        },
+        {
+            "tag": "Spotify",
+            "type": "selector",
+            "outbounds": [
+                "GLOBAL",
+                "HK",
+                "US",
+                "SG",
+                "JP",
+                "TW",
+                "KR",
+                "DIRECT"
+            ],
+            "default": "JP",
+            "interrupt_exist_connections": true
+        },
+        {
+            "tag": "TikTok",
+            "type": "selector",
+            "outbounds": [
+                "GLOBAL",
+                "HK",
+                "US",
+                "SG",
+                "JP",
+                "TW",
+                "KR"
+            ],
+            "default": "GLOBAL",
+            "interrupt_exist_connections": true
+        },
+        {
+            "tag": "X",
+            "type": "selector",
+            "outbounds": [
+                "GLOBAL",
+                "HK",
+                "US",
+                "SG",
+                "JP",
+                "TW",
+                "KR"
+            ],
+            "default": "GLOBAL",
+            "interrupt_exist_connections": true
+        },
+        {
+            "tag": "HK",
+            "type": "urltest",
+            "outbounds": []
+        },
+        {
+            "tag": "US",
+            "type": "urltest",
+            "outbounds": []
+        },
+        {
+            "tag": "SG",
+            "type": "urltest",
+            "outbounds": []
+        },
+        {
+            "tag": "JP",
+            "type": "urltest",
+            "outbounds": []
+        },
+        {
+            "tag": "TW",
+            "type": "urltest",
+            "outbounds": []
+        },
+        {
+            "tag": "KR",
+            "type": "urltest",
+            "outbounds": []
+        }
+    ],
+    "route": {
+        "default_domain_resolver": {"server": "ali"},
+        "rule_set": [
+            {
+                "type": "local",
+                "tag": "LOCAL",
+                "format": "source",
+                "path": "RuleSet/local.json"
+            },
+            {
+                "tag": "AI",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-ai-!cn.srs",
+                "download_detour": "GitHub"
+            },
+            {
+                "tag": "Apple",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/apple-cn.srs",
+                "download_detour": "GitHub"
+            },
+            {
+                "tag": "GitHub",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Github.srs",
+                "download_detour": "GitHub"
+            },
+            {
+                "tag": "Google",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Google.srs",
+                "download_detour": "GitHub"
+            },
+            {
+                "tag": "Microsoft",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Microsoft.srs",
+                "download_detour": "GitHub"
+            },
+            {
+                "tag": "Speedtest",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/speedtest.srs",
+                "download_detour": "GitHub"
+            },
+            {
+                "tag": "Spotify",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/Spotify/Spotify.srs",
+                "download_detour": "GitHub"
+            },
+            {
+                "tag": "Steam@CN",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/SteamCN/SteamCN.srs",
+                "download_detour": "GitHub"
+            },
+            {
+                "tag": "Steam",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/Steam/Steam.srs",
+                "download_detour": "GitHub"
+            },
+            {
+                "tag": "Telegram",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Telegram.srs",
+                "download_detour": "GitHub"
+            },
+            {
+                "tag": "TikTok",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/TikTok.srs",
+                "download_detour": "GitHub"
+            },
+            {
+                "tag": "X",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Twitter.srs",
+                "download_detour": "GitHub"
+            },
+            {
+                "tag": "YouTube",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/YouTube.srs",
+                "download_detour": "GitHub"
+            },
+            {
+                "tag": "ChinaDomain",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-geolocation-cn.srs",
+                "download_detour": "GitHub"
+            },
+            {
+                "tag": "ChinaIP",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-cn.srs",
+                "download_detour": "GitHub"
+            }
+        ],
+        "rules": [
+            {
+                "action": "sniff"
+            },
+            {
+                "type": "logical",
+                "mode": "or",
+                "rules": [
+                    {
+                        "port": 53
+                    },
+                    {
+                        "protocol": "dns"
+                    }
+                ],
+                "action": "hijack-dns"
+            },
+            {
+                "ip_is_private": true,
+                "outbound": "DIRECT"
+            },
+            {
+                "clash_mode": "Direct",
+                "action": "route",
+                "outbound": "DIRECT"
+            },
+            {
+                "clash_mode": "Global",
+                "action": "route",
+                "outbound": "GLOBAL"
+            },
+            {
+                "rule_set": [
+                    "LOCAL"
+                ],
+                "action": "route",
+                "outbound": "LOCAL"
+            },
+            {
+                "rule_set": [
+                    "AI"
+                ],
+                "action": "route",
+                "outbound": "AI"
+            },
+            {
+                "rule_set": [
+                    "YouTube",
+                    "Google"
+                ],
+                "action": "route",
+                "outbound": "Google"
+            },
+            {
+                "rule_set": [
+                    "GitHub"
+                ],
+                "action": "route",
+                "outbound": "GitHub"
+            },
+            {
+                "rule_set": [
+                    "Microsoft"
+                ],
+                "action": "route",
+                "outbound": "Microsoft"
+            },
+            {
+                "rule_set": [
+                    "Speedtest"
+                ],
+                "action": "route",
+                "outbound": "Speedtest"
+            },
+            {
+                "rule_set": [
+                    "Spotify"
+                ],
+                "action": "route",
+                "outbound": "Spotify"
+            },
+            {
+                "rule_set": [
+                    "Steam@CN"
+                ],
+                "action": "route",
+                "outbound": "DIRECT"
+            },
+            {
+                "rule_set": [
+                    "Steam"
+                ],
+                "action": "route",
+                "outbound": "Steam"
+            },
+            {
+                "rule_set": [
+                    "Telegram"
+                ],
+                "action": "route",
+                "outbound": "GLOBAL"
+            },
+            {
+                "rule_set": [
+                    "TikTok"
+                ],
+                "action": "route",
+                "outbound": "TikTok"
+            },
+            {
+                "rule_set": [
+                    "X"
+                ],
+                "action": "route",
+                "outbound": "X"
+            },
+            {
+                "action": "resolve"
+            },
+            {
+                "rule_set": [
+                    "ChinaDomain",
+                    "ChinaIP",
+                    "Apple"
+                ],
+                "action": "route",
+                "outbound": "DIRECT"
+            }
+        ],
+        "auto_detect_interface": true,
+        "final": "FINAL"
+    }
+}
