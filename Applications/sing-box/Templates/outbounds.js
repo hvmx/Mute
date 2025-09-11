@@ -1,8 +1,8 @@
 let { type, name } = $arguments
 type = /^1$|col|组合/i.test(type) ? 'collection' : 'subscription'
-let outbounds
+let config
 try {
-  outbounds = JSON.parse($content ?? $files[0])
+  config = JSON.parse($content ?? $files[0])
 } catch (e) {
   throw new Error('配置文件不是合法的 JSON')
 }
@@ -14,9 +14,8 @@ let proxies = await produceArtifact({
   produceType: 'internal',
 })
 
-outbounds.push(...proxies)
 
-outbounds.map(i => {
+config.outbounds.map(i => {
   if (['Main'].includes(i.tag)) {
     i.outbounds.push(...getTags(proxies))
   }
@@ -40,13 +39,13 @@ outbounds.map(i => {
   }
 })
 
-outbounds.forEach(outbound => {
+config.outbounds.forEach(outbound => {
   if (Array.isArray(outbound.outbounds) && outbound.outbounds.length === 0) {
     outbound.outbounds.push(compatible_tag);
   }
 });
 
-$content = JSON.stringify(outbounds, null, 2)
+$content = JSON.stringify(config, null, 2)
 
 function getTags(proxies, regex) {
   return (regex ? proxies.filter(p => regex.test(p.tag)) : proxies).map(p => p.tag)
