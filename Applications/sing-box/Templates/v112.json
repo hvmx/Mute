@@ -20,41 +20,62 @@
     "dns": {
         "servers": [
             {
-                "tag": "cloudflare",
+                "tag": "google",
                 "type": "https",
-                "server": "1.1.1.1",
-                "detour": "GLOBAL"
+                "server": "dns.google",
+                "detour": "GLOBAL",
+                "domain_resolver": "hosts"
             },
             {
                 "tag": "ali",
                 "type": "https",
-                "server": "223.6.6.6"
+                "server": "dns.alidns.com",
+                "domain_resolver": "hosts"
             },
             {
                 "tag": "fakeip",
                 "type": "fakeip",
                 "inet4_range": "198.18.0.0/15",
                 "inet6_range": "fc00::/18"
+            },
+            {
+                "type": "hosts",
+                "tag": "hosts",
+                "predefined": {
+                    "dns.alidns.com": [
+                        "223.5.5.5",
+                        "223.6.6.6"
+                    ],
+                    "dns.google": [
+                        "8.8.8.8",
+                        "8.8.4.4"
+                    ]
+                }
             }
         ],
         "rules": [
             {
                 "clash_mode": "Direct",
-                "action": "route",
                 "server": "ali"
             },
             {
                 "clash_mode": "Global",
-                "action": "route",
-                "server": "cloudflare"
+                "server": "fakeip"
+            },
+            {
+                "action": "predefined",
+                "query_type": [
+                    "HTTPS"
+                ],
+                "rcode": "NOTIMP"
             },
             {
                 "query_type": [
                     "A",
                     "AAAA"
                 ],
-                "action": "route",
-                "server": "fakeip"
+                "server": "fakeip",
+                "rewrite_ttl": 1
             },
             {
                 "rule_set": [
@@ -62,11 +83,10 @@
                     "ChinaDomain",
                     "Steam@CN"
                 ],
-                "action": "route",
                 "server": "ali"
             }
         ],
-        "final": "cloudflare",
+        "final": "google",
         "independent_cache": true,
         "strategy": "prefer_ipv4"
     },
@@ -291,7 +311,9 @@
         }
     ],
     "route": {
-        "default_domain_resolver": {"server": "ali"},
+        "default_domain_resolver": {
+            "server": "ali"
+        },
         "rule_set": [
             {
                 "type": "local",
