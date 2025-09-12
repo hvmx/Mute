@@ -14,6 +14,7 @@ let proxies = await produceArtifact({
   produceType: 'internal',
 })
 
+config.outbounds.push(...proxies)
 
 config.outbounds.map(i => {
   if (['Main'].includes(i.tag)) {
