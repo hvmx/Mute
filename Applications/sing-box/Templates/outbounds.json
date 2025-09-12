@@ -1,0 +1,209 @@
+{
+        "outbounds": [
+        {
+            "tag": "DIRECT",
+            "type": "direct"
+        },
+        {
+            "tag": "Main",
+            "type": "selector",
+            "outbounds": []
+        },
+        {
+            "tag": "GLOBAL",
+            "type": "selector",
+            "outbounds": [
+                "Main",
+                "HK",
+                "US",
+                "SG",
+                "JP",
+                "TW",
+                "KR"
+            ],
+            "default": "JP",
+            "interrupt_exist_connections": true
+        },
+        {
+            "tag": "FINAL",
+            "type": "selector",
+            "outbounds": [
+                "GLOBAL",
+                "DIRECT"
+            ],
+            "default": "GLOBAL",
+            "interrupt_exist_connections": true
+        },
+        {
+            "tag": "LOCAL",
+            "type": "selector",
+            "outbounds": [
+                "GLOBAL",
+                "KR",
+                "US",
+                "SG",
+                "JP",
+                "TW",
+                "DIRECT"
+            ],
+            "default": "DIRECT",
+            "interrupt_exist_connections": true
+        },
+        {
+            "tag": "AI",
+            "type": "selector",
+            "outbounds": [
+                "GLOBAL",
+                "KR",
+                "US",
+                "SG",
+                "JP",
+                "TW"
+            ],
+            "default": "GLOBAL",
+            "interrupt_exist_connections": true
+        },
+        {
+            "tag": "Steam",
+            "type": "selector",
+            "outbounds": [
+                "GLOBAL",
+                "KR",
+                "US",
+                "SG",
+                "JP",
+                "TW",
+                "DIRECT"
+            ],
+            "default": "GLOBAL",
+            "interrupt_exist_connections": true
+        },
+        {
+            "tag": "GitHub",
+            "type": "selector",
+            "outbounds": [
+                "GLOBAL",
+                "DIRECT"
+            ],
+            "default": "GLOBAL",
+            "interrupt_exist_connections": true
+        },
+        {
+            "tag": "Google",
+            "type": "selector",
+            "outbounds": [
+                "GLOBAL",
+                "HK",
+                "US",
+                "SG",
+                "JP",
+                "TW",
+                "KR"
+            ],
+            "default": "HK",
+            "interrupt_exist_connections": true
+        },
+        {
+            "tag": "Microsoft",
+            "type": "selector",
+            "outbounds": [
+                "GLOBAL",
+                "HK",
+                "US",
+                "SG",
+                "JP",
+                "TW",
+                "KR",
+                "DIRECT"
+            ],
+            "default": "DIRECT",
+            "interrupt_exist_connections": true
+        },
+        {
+            "tag": "Speedtest",
+            "type": "selector",
+            "outbounds": [
+                "GLOBAL",
+                "DIRECT"
+            ],
+            "default": "DIRECT",
+            "interrupt_exist_connections": true
+        },
+        {
+            "tag": "Spotify",
+            "type": "selector",
+            "outbounds": [
+                "GLOBAL",
+                "HK",
+                "US",
+                "SG",
+                "JP",
+                "TW",
+                "KR",
+                "DIRECT"
+            ],
+            "default": "JP",
+            "interrupt_exist_connections": true
+        },
+        {
+            "tag": "TikTok",
+            "type": "selector",
+            "outbounds": [
+                "GLOBAL",
+                "HK",
+                "US",
+                "SG",
+                "JP",
+                "TW",
+                "KR"
+            ],
+            "default": "GLOBAL",
+            "interrupt_exist_connections": true
+        },
+        {
+            "tag": "X",
+            "type": "selector",
+            "outbounds": [
+                "GLOBAL",
+                "HK",
+                "US",
+                "SG",
+                "JP",
+                "TW",
+                "KR"
+            ],
+            "default": "GLOBAL",
+            "interrupt_exist_connections": true
+        },
+        {
+            "tag": "HK",
+            "type": "urltest",
+            "outbounds": []
+        },
+        {
+            "tag": "US",
+            "type": "urltest",
+            "outbounds": []
+        },
+        {
+            "tag": "SG",
+            "type": "urltest",
+            "outbounds": []
+        },
+        {
+            "tag": "JP",
+            "type": "urltest",
+            "outbounds": []
+        },
+        {
+            "tag": "TW",
+            "type": "urltest",
+            "outbounds": []
+        },
+        {
+            "tag": "KR",
+            "type": "urltest",
+            "outbounds": []
+        }
+    ]
+}
