@@ -80,75 +80,23 @@
             "type": "direct"
         },
         {
-            "tag": "Main",
+            "tag": "SELECT",
             "type": "selector",
             "outbounds": []
-        },
-        {
-            "tag": "GLOBAL",
-            "type": "selector",
-            "outbounds": [
-                "Main",
-                "HK",
-                "US",
-                "SG",
-                "JP",
-                "TW",
-                "KR"
-            ],
-            "default": "JP",
-            "interrupt_exist_connections": true
-        },
-        {
-            "tag": "FINAL",
-            "type": "selector",
-            "outbounds": [
-                "GLOBAL",
-                "DIRECT"
-            ],
-            "default": "GLOBAL",
-            "interrupt_exist_connections": true
-        },
-        {
-            "tag": "LOCAL",
-            "type": "selector",
-            "outbounds": [
-                "GLOBAL",
-                "KR",
-                "US",
-                "SG",
-                "JP",
-                "TW",
-                "DIRECT"
-            ],
-            "default": "DIRECT",
-            "interrupt_exist_connections": true
         },
         {
             "tag": "AI",
             "type": "selector",
             "outbounds": [
-                "GLOBAL",
-                "KR",
-                "US",
-                "SG",
+                "DE",
+                "HK",
                 "JP",
-                "TW"
-            ],
-            "default": "GLOBAL",
-            "interrupt_exist_connections": true
-        },
-        {
-            "tag": "Steam",
-            "type": "selector",
-            "outbounds": [
-                "GLOBAL",
                 "KR",
-                "US",
                 "SG",
-                "JP",
                 "TW",
-                "DIRECT"
+                "UK",
+                "US",
+                "GLOBAL"
             ],
             "default": "GLOBAL",
             "interrupt_exist_connections": true
@@ -157,6 +105,14 @@
             "tag": "GitHub",
             "type": "selector",
             "outbounds": [
+                "DE",
+                "HK",
+                "JP",
+                "KR",
+                "SG",
+                "TW",
+                "UK",
+                "US",
                 "GLOBAL",
                 "DIRECT"
             ],
@@ -167,28 +123,32 @@
             "tag": "Google",
             "type": "selector",
             "outbounds": [
-                "GLOBAL",
+                "DE",
                 "HK",
-                "US",
-                "SG",
                 "JP",
+                "KR",
+                "SG",
                 "TW",
-                "KR"
+                "UK",
+                "US",
+                "GLOBAL"
             ],
-            "default": "HK",
+            "default": "GLOBAL",
             "interrupt_exist_connections": true
         },
         {
             "tag": "Microsoft",
             "type": "selector",
             "outbounds": [
-                "GLOBAL",
+                "DE",
                 "HK",
-                "US",
-                "SG",
                 "JP",
-                "TW",
                 "KR",
+                "SG",
+                "TW",
+                "UK",
+                "US",
+                "GLOBAL",
                 "DIRECT"
             ],
             "default": "DIRECT",
@@ -208,29 +168,51 @@
             "tag": "Spotify",
             "type": "selector",
             "outbounds": [
-                "GLOBAL",
+                "DE",
                 "HK",
-                "US",
-                "SG",
                 "JP",
-                "TW",
                 "KR",
+                "SG",
+                "TW",
+                "UK",
+                "US",
+                "GLOBAL",
                 "DIRECT"
             ],
-            "default": "JP",
+            "default": "GLOBAL",
+            "interrupt_exist_connections": true
+        },
+        {
+            "tag": "Steam",
+            "type": "selector",
+            "outbounds": [
+                "DE",
+                "HK",
+                "JP",
+                "KR",
+                "SG",
+                "TW",
+                "UK",
+                "US",
+                "GLOBAL",
+                "DIRECT"
+            ],
+            "default": "GLOBAL",
             "interrupt_exist_connections": true
         },
         {
             "tag": "TikTok",
             "type": "selector",
             "outbounds": [
-                "GLOBAL",
+                "DE",
                 "HK",
-                "US",
-                "SG",
                 "JP",
+                "KR",
+                "SG",
                 "TW",
-                "KR"
+                "UK",
+                "US",
+                "GLOBAL"
             ],
             "default": "GLOBAL",
             "interrupt_exist_connections": true
@@ -239,16 +221,68 @@
             "tag": "X",
             "type": "selector",
             "outbounds": [
-                "GLOBAL",
+                "DE",
                 "HK",
-                "US",
-                "SG",
                 "JP",
+                "KR",
+                "SG",
                 "TW",
-                "KR"
+                "UK",
+                "US",
+                "GLOBAL"
             ],
             "default": "GLOBAL",
             "interrupt_exist_connections": true
+        },
+        {
+            "tag": "LOCAL",
+            "type": "selector",
+            "outbounds": [
+                "DE",
+                "HK",
+                "JP",
+                "KR",
+                "SG",
+                "TW",
+                "UK",
+                "US",
+                "GLOBAL",
+                "DIRECT"
+            ],
+            "default": "DIRECT",
+            "interrupt_exist_connections": true
+        },
+        {
+            "tag": "GLOBAL",
+            "type": "selector",
+            "outbounds": [
+                "DE",
+                "HK",
+                "JP",
+                "KR",
+                "SG",
+                "TW",
+                "UK",
+                "US",
+                "SELECT"
+            ],
+            "default": "US",
+            "interrupt_exist_connections": true
+        },
+        {
+            "tag": "FINAL",
+            "type": "selector",
+            "outbounds": [
+                "GLOBAL",
+                "DIRECT"
+            ],
+            "default": "GLOBAL",
+            "interrupt_exist_connections": true
+        },
+        {
+            "tag": "DE",
+            "type": "urltest",
+            "outbounds": []
         },
         {
             "tag": "HK",
@@ -256,7 +290,12 @@
             "outbounds": []
         },
         {
-            "tag": "US",
+            "tag": "JP",
+            "type": "urltest",
+            "outbounds": []
+        },
+                {
+            "tag": "KR",
             "type": "urltest",
             "outbounds": []
         },
@@ -266,20 +305,20 @@
             "outbounds": []
         },
         {
-            "tag": "JP",
-            "type": "urltest",
-            "outbounds": []
-        },
-        {
             "tag": "TW",
             "type": "urltest",
             "outbounds": []
         },
         {
-            "tag": "KR",
+            "tag": "UK",
             "type": "urltest",
             "outbounds": []
-        }
+        },
+        {
+            "tag": "US",
+            "type": "urltest",
+            "outbounds": []
+        } 
     ],
     "route": {
         "default_domain_resolver": {
