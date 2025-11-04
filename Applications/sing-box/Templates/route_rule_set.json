@@ -1,0 +1,111 @@
+{
+    "route": {
+        "rule_set": [
+            {
+                "tag": "AI",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-ai-!cn.srs",
+                "download_detour": "GitHub"
+            },
+            {
+                "tag": "Apple",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/apple-cn.srs",
+                "download_detour": "GitHub"
+            },
+            {
+                "tag": "GitHub",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Github.srs",
+                "download_detour": "GitHub"
+            },
+            {
+                "tag": "Google",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Google.srs",
+                "download_detour": "GitHub"
+            },
+            {
+                "tag": "Microsoft",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Microsoft.srs",
+                "download_detour": "GitHub"
+            },
+            {
+                "tag": "Speedtest",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/speedtest.srs",
+                "download_detour": "GitHub"
+            },
+            {
+                "tag": "Spotify",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/Spotify/Spotify.srs",
+                "download_detour": "GitHub"
+            },
+            {
+                "tag": "Steam@CN",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/SteamCN/SteamCN.srs",
+                "download_detour": "GitHub"
+            },
+            {
+                "tag": "Steam",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/Steam/Steam.srs",
+                "download_detour": "GitHub"
+            },
+            {
+                "tag": "Telegram",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Telegram.srs",
+                "download_detour": "GitHub"
+            },
+            {
+                "tag": "TikTok",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/TikTok.srs",
+                "download_detour": "GitHub"
+            },
+            {
+                "tag": "X",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Twitter.srs",
+                "download_detour": "GitHub"
+            },
+            {
+                "tag": "YouTube",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/YouTube.srs",
+                "download_detour": "GitHub"
+            },
+            {
+                "tag": "ChinaDomain",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-geolocation-cn.srs",
+                "download_detour": "GitHub"
+            },
+            {
+                "tag": "ChinaIP",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-cn.srs",
+                "download_detour": "GitHub"
+            }
+        ]
+    }
+}

@@ -1,0 +1,55 @@
+{
+    "dns": {
+        "servers": [
+            {
+                "tag": "google",
+                "type": "tls",
+                "server": "8.8.8.8",
+                "detour": "GLOBAL"
+            },
+            {
+                "tag": "ali",
+                "type": "tls",
+                "server": "223.5.5.5"
+            },
+            {
+                "tag": "fakeip",
+                "type": "fakeip",
+                "inet4_range": "198.18.0.0/15"
+            }
+        ],
+        "rules": [
+            {
+                "clash_mode": "Direct",
+                "server": "ali"
+            },
+            {
+                "clash_mode": "Global",
+                "server": "fakeip"
+            },
+            {
+                "query_type": "HTTPS",
+                "action": "reject"
+            },
+            {
+                "query_type": [
+                    "A",
+                    "AAAA"
+                ],
+                "server": "fakeip",
+                "rewrite_ttl": 1
+            },
+            {
+                "rule_set": [
+                    "Apple",
+                    "ChinaDomain",
+                    "Steam@CN"
+                ],
+                "server": "ali"
+            }
+        ],
+        "final": "google",
+        "independent_cache": true,
+        "strategy": "ipv4_only"
+    }
+}

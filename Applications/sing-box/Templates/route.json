@@ -1,0 +1,9 @@
+{
+    "route": {
+        "default_domain_resolver": {
+            "server": "ali"
+        },
+        "auto_detect_interface": true,
+        "final": "FINAL"
+    }
+}

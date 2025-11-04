@@ -1,0 +1,128 @@
+{
+    "route": {
+        "rules": [
+            {
+                "action": "sniff",
+                "inbound": [
+                    "http",
+                    "tls",
+                    "quic",
+                    "dns"
+                ],
+                "timeout": "500ms"
+            },
+            {
+                "type": "logical",
+                "mode": "or",
+                "rules": [
+                    {
+                        "port": 53
+                    },
+                    {
+                        "protocol": "dns"
+                    }
+                ],
+                "action": "hijack-dns"
+            },
+            {
+                "action": "resolve"
+            },
+            {
+                "ip_is_private": true,
+                "outbound": "DIRECT"
+            },
+            {
+                "clash_mode": "Direct",
+                "outbound": "DIRECT"
+            },
+            {
+                "clash_mode": "Global",
+                "outbound": "GLOBAL"
+            },
+            {
+                "domain_suffix": [
+                    "anime1.me",
+                    "anicdn.com",
+                    "linux.do",
+                    "nodeseek.com"
+                ],
+                "outbound": "LOCAL"
+            },
+            {
+                "rule_set": [
+                    "AI"
+                ],
+                "outbound": "AI"
+            },
+            {
+                "rule_set": [
+                    "YouTube",
+                    "Google"
+                ],
+                "outbound": "Google"
+            },
+            {
+                "rule_set": [
+                    "GitHub"
+                ],
+                "outbound": "GitHub"
+            },
+            {
+                "rule_set": [
+                    "Microsoft"
+                ],
+                "outbound": "Microsoft"
+            },
+            {
+                "rule_set": [
+                    "Speedtest"
+                ],
+                "outbound": "Speedtest"
+            },
+            {
+                "rule_set": [
+                    "Spotify"
+                ],
+                "outbound": "Spotify"
+            },
+            {
+                "rule_set": [
+                    "Steam@CN"
+                ],
+                "outbound": "DIRECT"
+            },
+            {
+                "rule_set": [
+                    "Steam"
+                ],
+                "outbound": "Steam"
+            },
+            {
+                "rule_set": [
+                    "Telegram"
+                ],
+                "outbound": "GLOBAL"
+            },
+            {
+                "rule_set": [
+                    "TikTok"
+                ],
+                "outbound": "TikTok"
+            },
+            {
+                "rule_set": [
+                    "X"
+                ],
+                "outbound": "X"
+            },
+            {
+                "rule_set": [
+                    "ChinaDomain",
+                    "ChinaIP",
+                    "Apple"
+                ],
+                "outbound": "DIRECT"
+            }
+        ]
+    }
+}
