@@ -25,9 +25,6 @@
                 "action": "hijack-dns"
             },
             {
-                "action": "resolve"
-            },
-            {
                 "ip_is_private": true,
                 "outbound": "DIRECT"
             },
@@ -114,6 +111,9 @@
                     "X"
                 ],
                 "outbound": "X"
+            },
+            {
+                "action": "resolve"
             },
             {
                 "rule_set": [

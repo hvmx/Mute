@@ -2,15 +2,15 @@
     "dns": {
         "servers": [
             {
-                "tag": "google",
-                "type": "tls",
-                "server": "8.8.8.8",
+                "tag": "global",
+                "type": "https",
+                "server": "1.1.1.1",
                 "detour": "GLOBAL"
             },
             {
-                "tag": "ali",
-                "type": "tls",
-                "server": "223.5.5.5"
+                "tag": "direct",
+                "type": "https",
+                "server": "223.6.6.6"
             },
             {
                 "tag": "fakeip",
@@ -21,7 +21,7 @@
         "rules": [
             {
                 "clash_mode": "Direct",
-                "server": "ali"
+                "server": "direct"
             },
             {
                 "clash_mode": "Global",
@@ -45,10 +45,10 @@
                     "ChinaDomain",
                     "Steam@CN"
                 ],
-                "server": "ali"
+                "server": "direct"
             }
         ],
-        "final": "google",
+        "final": "global",
         "independent_cache": true,
         "strategy": "ipv4_only"
     }
