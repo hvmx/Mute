@@ -6,7 +6,7 @@ try {
 } catch (e) {
   throw new Error('配置文件不是合法的 JSON')
 }
-let compatible_tag = 'reject'
+let compatible_tag = 'REJECT'
 let proxies = await produceArtifact({
   name,
   type: /^1$|col/i.test(type) ? 'collection' : 'subscription',
@@ -32,8 +32,14 @@ config.outbounds.map(i => {
   if (['KR'].includes(i.tag)) {
     i.outbounds.push(...getTags(proxies, /韩国|Korea(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
   }
+  if (['NL'].includes(i.tag)) {
+    i.outbounds.push(...getTags(proxies, /荷兰|Netherlands(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
+  }
   if (['SG'].includes(i.tag)) {
     i.outbounds.push(...getTags(proxies, /新加坡|Singapore(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
+  }
+  if (['TR'].includes(i.tag)) {
+    i.outbounds.push(...getTags(proxies, /土耳其|Türkiye(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
   }
   if (['TW'].includes(i.tag)) {
     i.outbounds.push(...getTags(proxies, /台湾|Taiwan(?!.*\b(1\.\d+|[2-9]\d*)倍)/))

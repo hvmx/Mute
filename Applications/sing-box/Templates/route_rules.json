@@ -43,7 +43,13 @@
                     "linux.do",
                     "nodeseek.com"
                 ],
-                "outbound": "LOCAL"
+                "outbound": "DIRECT"
+            },
+            {
+                "process_name": [
+                    "LDJGame.exe"
+                ],
+                "outbound": "EXTRA"
             },
             {
                 "rule_set": [
