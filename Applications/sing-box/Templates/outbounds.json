@@ -1,6 +1,10 @@
 {
     "outbounds": [
         {
+            "tag": "Direct",
+            "type": "direct"
+        },
+        {
             "tag": "Block",
             "type": "block"
         },
@@ -33,7 +37,7 @@
             "type": "selector",
             "outbounds": [
                 "Global",
-                "direct"
+                "Direct"
             ],
             "default": "Global",
             "interrupt_exist_connections": true
@@ -71,9 +75,9 @@
                 "TW",
                 "UK",
                 "US",
-                "direct"
+                "Direct"
             ],
-            "default": "direct",
+            "default": "Direct",
             "interrupt_exist_connections": true
         },
         {
@@ -90,9 +94,9 @@
                 "TW",
                 "UK",
                 "US",
-                "direct"
+                "Direct"
             ],
-            "default": "direct",
+            "default": "Direct",
             "interrupt_exist_connections": true
         },
         {
@@ -109,9 +113,9 @@
                 "TW",
                 "UK",
                 "US",
-                "direct"
+                "Direct"
             ],
-            "default": "direct",
+            "default": "Direct",
             "interrupt_exist_connections": true
         },
         {
@@ -129,7 +133,7 @@
                 "UK",
                 "US",
                 "Global",
-                "direct"
+                "Direct"
             ],
             "default": "Global",
             "interrupt_exist_connections": true
@@ -196,7 +200,7 @@
             "type": "selector",
             "outbounds": [
                 "Global",
-                "direct"
+                "Direct"
             ],
             "default": "Global",
             "interrupt_exist_connections": true

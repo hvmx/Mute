@@ -26,7 +26,7 @@
             },
             {
                 "ip_is_private": true,
-                "outbound": "direct"
+                "outbound": "Direct"
             },
             {
                 "domain_suffix": [
@@ -35,7 +35,7 @@
                     "linux.do",
                     "nodeseek.com"
                 ],
-                "outbound": "direct"
+                "outbound": "Direct"
             },
             {
                 "process_name": [
@@ -84,7 +84,7 @@
                 "rule_set": [
                     "Steam@CN"
                 ],
-                "outbound": "direct"
+                "outbound": "Direct"
             },
             {
                 "rule_set": [
@@ -119,7 +119,7 @@
                     "ChinaIP",
                     "Apple"
                 ],
-                "outbound": "direct"
+                "outbound": "Direct"
             }
         ]
     }
