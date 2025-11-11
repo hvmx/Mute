@@ -6,7 +6,7 @@ try {
 } catch (e) {
   throw new Error('配置文件不是合法的 JSON')
 }
-let compatible_tag = 'Block'
+let compatible_tag = 'block'
 let proxies = await produceArtifact({
   name,
   type: /^1$|col/i.test(type) ? 'collection' : 'subscription',

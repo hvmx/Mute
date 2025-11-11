@@ -1,7 +1,7 @@
 {
     "outbounds": [
         {
-            "tag": "SELECT",
+            "tag": "Select",
             "type": "selector",
             "outbounds": []
         },
@@ -29,7 +29,7 @@
             "type": "selector",
             "outbounds": [
                 "Global",
-                "Direct"
+                "direct"
             ],
             "default": "Global",
             "interrupt_exist_connections": true
@@ -67,9 +67,9 @@
                 "TW",
                 "UK",
                 "US",
-                "Direct"
+                "direct"
             ],
-            "default": "Direct",
+            "default": "direct",
             "interrupt_exist_connections": true
         },
         {
@@ -86,9 +86,9 @@
                 "TW",
                 "UK",
                 "US",
-                "Direct"
+                "direct"
             ],
-            "default": "Direct",
+            "default": "direct",
             "interrupt_exist_connections": true
         },
         {
@@ -105,9 +105,9 @@
                 "TW",
                 "UK",
                 "US",
-                "Direct"
+                "direct"
             ],
-            "default": "Direct",
+            "default": "direct",
             "interrupt_exist_connections": true
         },
         {
@@ -125,7 +125,7 @@
                 "UK",
                 "US",
                 "Global",
-                "Direct"
+                "direct"
             ],
             "default": "Global",
             "interrupt_exist_connections": true
@@ -182,7 +182,7 @@
                 "TW",
                 "UK",
                 "US",
-                "SELECT"
+                "Select"
             ],
             "default": "US",
             "interrupt_exist_connections": true
@@ -192,7 +192,7 @@
             "type": "selector",
             "outbounds": [
                 "Global",
-                "Direct"
+                "direct"
             ],
             "default": "Global",
             "interrupt_exist_connections": true
