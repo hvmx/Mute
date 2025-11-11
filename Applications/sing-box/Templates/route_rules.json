@@ -26,15 +26,7 @@
             },
             {
                 "ip_is_private": true,
-                "outbound": "DIRECT"
-            },
-            {
-                "clash_mode": "Direct",
-                "outbound": "DIRECT"
-            },
-            {
-                "clash_mode": "Global",
-                "outbound": "GLOBAL"
+                "outbound": "Direct"
             },
             {
                 "domain_suffix": [
@@ -43,13 +35,13 @@
                     "linux.do",
                     "nodeseek.com"
                 ],
-                "outbound": "DIRECT"
+                "outbound": "Direct"
             },
             {
                 "process_name": [
                     "LDJGame.exe"
                 ],
-                "outbound": "EXTRA"
+                "outbound": "Extra"
             },
             {
                 "rule_set": [
@@ -92,7 +84,7 @@
                 "rule_set": [
                     "Steam@CN"
                 ],
-                "outbound": "DIRECT"
+                "outbound": "Direct"
             },
             {
                 "rule_set": [
@@ -104,7 +96,7 @@
                 "rule_set": [
                     "Telegram"
                 ],
-                "outbound": "GLOBAL"
+                "outbound": "Global"
             },
             {
                 "rule_set": [
@@ -127,7 +119,7 @@
                     "ChinaIP",
                     "Apple"
                 ],
-                "outbound": "DIRECT"
+                "outbound": "Direct"
             }
         ]
     }

@@ -4,6 +4,6 @@
             "server": "direct"
         },
         "auto_detect_interface": true,
-        "final": "FINAL"
+        "final": "Final"
     }
 }

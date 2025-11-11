@@ -1,14 +1,6 @@
 {
     "outbounds": [
         {
-            "tag": "DIRECT",
-            "type": "direct"
-        },
-        {
-            "tag": "REJECT",
-            "type": "reject"
-        },
-        {
             "tag": "SELECT",
             "type": "selector",
             "outbounds": []
@@ -27,19 +19,19 @@
                 "TW",
                 "UK",
                 "US",
-                "GLOBAL"
+                "Global"
             ],
-            "default": "GLOBAL",
+            "default": "Global",
             "interrupt_exist_connections": true
         },
         {
             "tag": "GitHub",
             "type": "selector",
             "outbounds": [
-                "GLOBAL",
-                "DIRECT"
+                "Global",
+                "Direct"
             ],
-            "default": "GLOBAL",
+            "default": "Global",
             "interrupt_exist_connections": true
         },
         {
@@ -56,9 +48,9 @@
                 "TW",
                 "UK",
                 "US",
-                "GLOBAL"
+                "Global"
             ],
-            "default": "GLOBAL",
+            "default": "Global",
             "interrupt_exist_connections": true
         },
         {
@@ -75,9 +67,9 @@
                 "TW",
                 "UK",
                 "US",
-                "DIRECT"
+                "Direct"
             ],
-            "default": "DIRECT",
+            "default": "Direct",
             "interrupt_exist_connections": true
         },
         {
@@ -94,9 +86,9 @@
                 "TW",
                 "UK",
                 "US",
-                "DIRECT"
+                "Direct"
             ],
-            "default": "DIRECT",
+            "default": "Direct",
             "interrupt_exist_connections": true
         },
         {
@@ -113,9 +105,9 @@
                 "TW",
                 "UK",
                 "US",
-                "DIRECT"
+                "Direct"
             ],
-            "default": "DIRECT",
+            "default": "Direct",
             "interrupt_exist_connections": true
         },
         {
@@ -132,10 +124,10 @@
                 "TW",
                 "UK",
                 "US",
-                "GLOBAL",
-                "DIRECT"
+                "Global",
+                "Direct"
             ],
-            "default": "GLOBAL",
+            "default": "Global",
             "interrupt_exist_connections": true
         },
         {
@@ -152,9 +144,9 @@
                 "TW",
                 "UK",
                 "US",
-                "GLOBAL"
+                "Global"
             ],
-            "default": "GLOBAL",
+            "default": "Global",
             "interrupt_exist_connections": true
         },
         {
@@ -171,13 +163,13 @@
                 "TW",
                 "UK",
                 "US",
-                "GLOBAL"
+                "Global"
             ],
-            "default": "GLOBAL",
+            "default": "Global",
             "interrupt_exist_connections": true
         },
         {
-            "tag": "GLOBAL",
+            "tag": "Global",
             "type": "selector",
             "outbounds": [
                 "DE",
@@ -196,17 +188,17 @@
             "interrupt_exist_connections": true
         },
         {
-            "tag": "FINAL",
+            "tag": "Final",
             "type": "selector",
             "outbounds": [
-                "GLOBAL",
-                "DIRECT"
+                "Global",
+                "Direct"
             ],
-            "default": "GLOBAL",
+            "default": "Global",
             "interrupt_exist_connections": true
         },
         {
-            "tag": "EXTRA",
+            "tag": "Extra",
             "type": "selector",
             "outbounds": [
                 "DE",
@@ -219,9 +211,9 @@
                 "TW",
                 "UK",
                 "US",
-                "GLOBAL"
+                "Global"
             ],
-            "default": "GLOBAL",
+            "default": "Global",
             "interrupt_exist_connections": true
         },
         {

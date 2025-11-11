@@ -5,7 +5,7 @@
                 "tag": "global",
                 "type": "https",
                 "server": "1.1.1.1",
-                "detour": "GLOBAL"
+                "detour": "Global"
             },
             {
                 "tag": "direct",
@@ -19,14 +19,6 @@
             }
         ],
         "rules": [
-            {
-                "clash_mode": "Direct",
-                "server": "direct"
-            },
-            {
-                "clash_mode": "Global",
-                "server": "fakeip"
-            },
             {
                 "query_type": "HTTPS",
                 "action": "reject"
