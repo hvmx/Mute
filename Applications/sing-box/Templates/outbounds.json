@@ -1,6 +1,10 @@
 {
     "outbounds": [
         {
+            "tag": "Block",
+            "type": "block"
+        },
+        {
             "tag": "Select",
             "type": "selector",
             "outbounds": []
