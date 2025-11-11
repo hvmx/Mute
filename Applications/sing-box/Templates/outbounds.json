@@ -1,17 +1,65 @@
 {
     "outbounds": [
         {
+            "tag": "Final",
+            "type": "selector",
+            "outbounds": [
+                "Global",
+                "Direct"
+            ],
+            "default": "Global",
+            "interrupt_exist_connections": true
+        },
+        {
+            "tag": "Global",
+            "type": "selector",
+            "outbounds": [
+                "DE",
+                "HK",
+                "JP",
+                "KR",
+                "NL",
+                "SG",
+                "TR",
+                "TW",
+                "UK",
+                "US",
+                "Select"
+            ],
+            "default": "US",
+            "interrupt_exist_connections": true
+        },
+        {
+            "tag": "Extra",
+            "type": "selector",
+            "outbounds": [
+                "DE",
+                "HK",
+                "JP",
+                "KR",
+                "NL",
+                "SG",
+                "TR",
+                "TW",
+                "UK",
+                "US",
+                "Global"
+            ],
+            "default": "Global",
+            "interrupt_exist_connections": true
+        },
+        {
+            "tag": "Select",
+            "type": "selector",
+            "outbounds": []
+        },
+        {
             "tag": "Direct",
             "type": "direct"
         },
         {
             "tag": "Block",
             "type": "block"
-        },
-        {
-            "tag": "Select",
-            "type": "selector",
-            "outbounds": []
         },
         {
             "tag": "AI",
@@ -177,54 +225,6 @@
             "interrupt_exist_connections": true
         },
         {
-            "tag": "Global",
-            "type": "selector",
-            "outbounds": [
-                "DE",
-                "HK",
-                "JP",
-                "KR",
-                "NL",
-                "SG",
-                "TR",
-                "TW",
-                "UK",
-                "US",
-                "Select"
-            ],
-            "default": "US",
-            "interrupt_exist_connections": true
-        },
-        {
-            "tag": "Final",
-            "type": "selector",
-            "outbounds": [
-                "Global",
-                "Direct"
-            ],
-            "default": "Global",
-            "interrupt_exist_connections": true
-        },
-        {
-            "tag": "Extra",
-            "type": "selector",
-            "outbounds": [
-                "DE",
-                "HK",
-                "JP",
-                "KR",
-                "NL",
-                "SG",
-                "TR",
-                "TW",
-                "UK",
-                "US",
-                "Global"
-            ],
-            "default": "Global",
-            "interrupt_exist_connections": true
-        },
-        {
             "tag": "DE",
             "type": "urltest",
             "outbounds": []
@@ -273,6 +273,6 @@
             "tag": "US",
             "type": "urltest",
             "outbounds": []
-        } 
+        }
     ]
 }
