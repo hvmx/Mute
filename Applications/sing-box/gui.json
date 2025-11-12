@@ -17,7 +17,7 @@
                 "tag": "global",
                 "type": "https",
                 "server": "1.1.1.1",
-                "detour": "GLOBAL"
+                "detour": "Global"
             },
             {
                 "tag": "direct",
@@ -31,14 +31,6 @@
             }
         ],
         "rules": [
-            {
-                "clash_mode": "Direct",
-                "server": "direct"
-            },
-            {
-                "clash_mode": "Global",
-                "server": "fakeip"
-            },
             {
                 "query_type": "HTTPS",
                 "action": "reject"
@@ -76,13 +68,66 @@
     ],
     "outbounds": [
         {
-            "tag": "DIRECT",
+            "tag": "Final",
+            "type": "selector",
+            "outbounds": [
+                "Global",
+                "Direct"
+            ],
+            "default": "Global",
+            "interrupt_exist_connections": true
+        },
+        {
+            "tag": "Global",
+            "type": "selector",
+            "outbounds": [
+                "DE",
+                "HK",
+                "JP",
+                "KR",
+                "NL",
+                "SG",
+                "TR",
+                "TW",
+                "UK",
+                "US",
+                "Select"
+            ],
+            "default": "US",
+            "interrupt_exist_connections": true
+        },
+        {
+            "tag": "Extra",
+            "type": "selector",
+            "outbounds": [
+                "DE",
+                "HK",
+                "JP",
+                "KR",
+                "NL",
+                "SG",
+                "TR",
+                "TW",
+                "UK",
+                "US",
+                "Global",
+                "Direct"
+            ],
+            "default": "Global",
+            "interrupt_exist_connections": true
+        },
+        {
+            "tag": "Select",
+            "type": "selector",
+            "outbounds": []
+        },
+        {
+            "tag": "Direct",
             "type": "direct"
         },
         {
-            "tag": "SELECT",
-            "type": "selector",
-            "outbounds": []
+            "tag": "Block",
+            "type": "block"
         },
         {
             "tag": "AI",
@@ -92,31 +137,25 @@
                 "HK",
                 "JP",
                 "KR",
+                "NL",
                 "SG",
+                "TR",
                 "TW",
                 "UK",
                 "US",
-                "GLOBAL"
+                "Global"
             ],
-            "default": "GLOBAL",
+            "default": "Global",
             "interrupt_exist_connections": true
         },
         {
             "tag": "GitHub",
             "type": "selector",
             "outbounds": [
-                "DE",
-                "HK",
-                "JP",
-                "KR",
-                "SG",
-                "TW",
-                "UK",
-                "US",
-                "GLOBAL",
-                "DIRECT"
+                "Global",
+                "Direct"
             ],
-            "default": "GLOBAL",
+            "default": "Global",
             "interrupt_exist_connections": true
         },
         {
@@ -127,13 +166,15 @@
                 "HK",
                 "JP",
                 "KR",
+                "NL",
                 "SG",
+                "TR",
                 "TW",
                 "UK",
                 "US",
-                "GLOBAL"
+                "Global"
             ],
-            "default": "GLOBAL",
+            "default": "Global",
             "interrupt_exist_connections": true
         },
         {
@@ -144,24 +185,34 @@
                 "HK",
                 "JP",
                 "KR",
+                "NL",
                 "SG",
+                "TR",
                 "TW",
                 "UK",
                 "US",
-                "GLOBAL",
-                "DIRECT"
+                "Direct"
             ],
-            "default": "DIRECT",
+            "default": "Direct",
             "interrupt_exist_connections": true
         },
         {
             "tag": "Speedtest",
             "type": "selector",
             "outbounds": [
-                "GLOBAL",
-                "DIRECT"
+                "DE",
+                "HK",
+                "JP",
+                "KR",
+                "NL",
+                "SG",
+                "TR",
+                "TW",
+                "UK",
+                "US",
+                "Direct"
             ],
-            "default": "DIRECT",
+            "default": "Direct",
             "interrupt_exist_connections": true
         },
         {
@@ -172,14 +223,15 @@
                 "HK",
                 "JP",
                 "KR",
+                "NL",
                 "SG",
+                "TR",
                 "TW",
                 "UK",
                 "US",
-                "GLOBAL",
-                "DIRECT"
+                "Direct"
             ],
-            "default": "GLOBAL",
+            "default": "Direct",
             "interrupt_exist_connections": true
         },
         {
@@ -190,14 +242,16 @@
                 "HK",
                 "JP",
                 "KR",
+                "NL",
                 "SG",
+                "TR",
                 "TW",
                 "UK",
                 "US",
-                "GLOBAL",
-                "DIRECT"
+                "Global",
+                "Direct"
             ],
-            "default": "GLOBAL",
+            "default": "Global",
             "interrupt_exist_connections": true
         },
         {
@@ -208,13 +262,15 @@
                 "HK",
                 "JP",
                 "KR",
+                "NL",
                 "SG",
+                "TR",
                 "TW",
                 "UK",
                 "US",
-                "GLOBAL"
+                "Global"
             ],
-            "default": "GLOBAL",
+            "default": "Global",
             "interrupt_exist_connections": true
         },
         {
@@ -225,58 +281,15 @@
                 "HK",
                 "JP",
                 "KR",
+                "NL",
                 "SG",
+                "TR",
                 "TW",
                 "UK",
                 "US",
-                "GLOBAL"
+                "Global"
             ],
-            "default": "GLOBAL",
-            "interrupt_exist_connections": true
-        },
-        {
-            "tag": "LOCAL",
-            "type": "selector",
-            "outbounds": [
-                "DE",
-                "HK",
-                "JP",
-                "KR",
-                "SG",
-                "TW",
-                "UK",
-                "US",
-                "GLOBAL",
-                "DIRECT"
-            ],
-            "default": "DIRECT",
-            "interrupt_exist_connections": true
-        },
-        {
-            "tag": "GLOBAL",
-            "type": "selector",
-            "outbounds": [
-                "DE",
-                "HK",
-                "JP",
-                "KR",
-                "SG",
-                "TW",
-                "UK",
-                "US",
-                "SELECT"
-            ],
-            "default": "US",
-            "interrupt_exist_connections": true
-        },
-        {
-            "tag": "FINAL",
-            "type": "selector",
-            "outbounds": [
-                "GLOBAL",
-                "DIRECT"
-            ],
-            "default": "GLOBAL",
+            "default": "Global",
             "interrupt_exist_connections": true
         },
         {
@@ -294,13 +307,23 @@
             "type": "urltest",
             "outbounds": []
         },
-                {
+        {
             "tag": "KR",
             "type": "urltest",
             "outbounds": []
         },
         {
+            "tag": "NL",
+            "type": "urltest",
+            "outbounds": []
+        },
+        {
             "tag": "SG",
+            "type": "urltest",
+            "outbounds": []
+        },
+        {
+            "tag": "TR",
             "type": "urltest",
             "outbounds": []
         },
@@ -318,7 +341,7 @@
             "tag": "US",
             "type": "urltest",
             "outbounds": []
-        } 
+        }
     ],
     "route": {
         "default_domain_resolver": {
@@ -457,15 +480,7 @@
             },
             {
                 "ip_is_private": true,
-                "outbound": "DIRECT"
-            },
-            {
-                "clash_mode": "Direct",
-                "outbound": "DIRECT"
-            },
-            {
-                "clash_mode": "Global",
-                "outbound": "GLOBAL"
+                "outbound": "Direct"
             },
             {
                 "domain_suffix": [
@@ -474,7 +489,7 @@
                     "linux.do",
                     "nodeseek.com"
                 ],
-                "outbound": "LOCAL"
+                "outbound": "Extra"
             },
             {
                 "rule_set": [
@@ -517,7 +532,7 @@
                 "rule_set": [
                     "Steam@CN"
                 ],
-                "outbound": "DIRECT"
+                "outbound": "Direct"
             },
             {
                 "rule_set": [
@@ -529,7 +544,7 @@
                 "rule_set": [
                     "Telegram"
                 ],
-                "outbound": "GLOBAL"
+                "outbound": "Global"
             },
             {
                 "rule_set": [
@@ -552,10 +567,10 @@
                     "ChinaIP",
                     "Apple"
                 ],
-                "outbound": "DIRECT"
+                "outbound": "Direct"
             }
         ],
         "auto_detect_interface": true,
-        "final": "FINAL"
+        "final": "Final"
     }
 }

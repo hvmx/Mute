@@ -43,7 +43,8 @@
                 "TW",
                 "UK",
                 "US",
-                "Global"
+                "Global",
+                "Direct"
             ],
             "default": "Global",
             "interrupt_exist_connections": true
