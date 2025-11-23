@@ -21,7 +21,7 @@ config.outbounds.map(i => {
     i.outbounds.push(...getTags(proxies))
   }
   if (['DE'].includes(i.tag)) {
-    i.outbounds.push(...getTags(proxies, /德国|Germany(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
+    i.outbounds.push(...getTags(proxies, /德国|Germany|Deutschland(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
   }
   if (['HK'].includes(i.tag)) {
     i.outbounds.push(...getTags(proxies, /香港|Hong Kong(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
@@ -45,10 +45,10 @@ config.outbounds.map(i => {
     i.outbounds.push(...getTags(proxies, /台湾|Taiwan(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
   }
   if (['UK'].includes(i.tag)) {
-    i.outbounds.push(...getTags(proxies, /英国|Britain(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
+    i.outbounds.push(...getTags(proxies, /英国|Britain|United Kingdom(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
   }
   if (['US'].includes(i.tag)) {
-    i.outbounds.push(...getTags(proxies, /美国|America(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
+    i.outbounds.push(...getTags(proxies, /美国|America|United States(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
   }
   
   
