@@ -1,6 +1,7 @@
 {
     "inbounds": [
         {
+            "tag": "tun-in",
             "type": "tun",
             "address": [
                 "172.18.0.1/30"

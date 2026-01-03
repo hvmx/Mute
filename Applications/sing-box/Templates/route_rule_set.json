@@ -5,105 +5,126 @@
                 "tag": "AI",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-ai-!cn.srs",
+                "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/AI.srs",
                 "download_detour": "GitHub"
             },
             {
-                "tag": "Apple",
+                "tag": "Apple@CN",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/apple-cn.srs",
+                "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/AppleCN.srs",
+                "download_detour": "GitHub"
+            },
+            {
+                "tag": "Epic",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Epic/Epic.srs",
                 "download_detour": "GitHub"
             },
             {
                 "tag": "GitHub",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Github.srs",
+                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/GitHub/GitHub.srs",
                 "download_detour": "GitHub"
             },
             {
                 "tag": "Google",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Google.srs",
+                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Google/Google.srs",
                 "download_detour": "GitHub"
             },
             {
                 "tag": "Microsoft",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Microsoft.srs",
+                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Microsoft/Microsoft.srs",
                 "download_detour": "GitHub"
             },
             {
                 "tag": "Speedtest",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/speedtest.srs",
+                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Speedtest/Speedtest.srs",
                 "download_detour": "GitHub"
             },
             {
                 "tag": "Spotify",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/Spotify/Spotify.srs",
+                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Spotify/Spotify.srs",
                 "download_detour": "GitHub"
             },
             {
                 "tag": "Steam@CN",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/SteamCN/SteamCN.srs",
+                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/SteamCN/SteamCN.srs",
                 "download_detour": "GitHub"
             },
             {
                 "tag": "Steam",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/Steam/Steam.srs",
+                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Steam/Steam.srs",
                 "download_detour": "GitHub"
             },
             {
                 "tag": "Telegram",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Telegram.srs",
+                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Telegram/Telegram.srs",
                 "download_detour": "GitHub"
             },
             {
                 "tag": "TikTok",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/TikTok.srs",
+                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/TikTok/TikTok.srs",
                 "download_detour": "GitHub"
             },
             {
                 "tag": "X",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Twitter.srs",
+                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Twitter/Twitter.srs",
                 "download_detour": "GitHub"
             },
             {
                 "tag": "YouTube",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/YouTube.srs",
+                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/YouTube/YouTube.srs",
                 "download_detour": "GitHub"
             },
             {
-                "tag": "ChinaDomain",
+                "tag": "YouTubeMusic",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-geolocation-cn.srs",
+                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/YouTubeMusic/YouTubeMusic.srs",
                 "download_detour": "GitHub"
             },
             {
-                "tag": "ChinaIP",
+                "tag": "PrivateDomain",
+                "type": "remote",
+                "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/private.srs",
+                "format": "binary",
+                "download_detour": "GitHub"
+            },
+            {
+                "tag": "PrivateIP",
+                "type": "remote",
+                "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geoip/private.srs",
+                "format": "binary",
+                "download_detour": "GitHub"
+            },
+            {
+                "tag": "ChinaMax",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-cn.srs",
+                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/ChinaMax/ChinaMax.srs",
                 "download_detour": "GitHub"
             }
         ]

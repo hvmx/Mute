@@ -3,45 +3,7 @@
         "rules": [
             {
                 "action": "sniff",
-                "inbound": [
-                    "http",
-                    "tls",
-                    "quic",
-                    "dns"
-                ],
-                "timeout": "500ms"
-            },
-            {
-                "type": "logical",
-                "mode": "or",
-                "rules": [
-                    {
-                        "port": 53
-                    },
-                    {
-                        "protocol": "dns"
-                    }
-                ],
-                "action": "hijack-dns"
-            },
-            {
-                "ip_is_private": true,
-                "outbound": "Direct"
-            },
-            {
-                "domain_suffix": [
-                    "anime1.me",
-                    "anicdn.com",
-                    "linux.do",
-                    "nodeseek.com"
-                ],
-                "outbound": "Direct"
-            },
-            {
-                "process_name": [
-                    "LDJGame.exe"
-                ],
-                "outbound": "Extra"
+                "inbound": "tun-in"
             },
             {
                 "rule_set": [
@@ -51,8 +13,21 @@
             },
             {
                 "rule_set": [
+                    "Apple@CN"
+                ],
+                "outbound": "Direct"
+            },
+            {
+                "rule_set": [
+                    "Epic"
+                ],
+                "outbound": "Epic"
+            },
+            {
+                "rule_set": [
+                    "Google",
                     "YouTube",
-                    "Google"
+                    "YouTubeMusic"
                 ],
                 "outbound": "Google"
             },
@@ -111,13 +86,26 @@
                 "outbound": "X"
             },
             {
-                "action": "resolve"
+                "action": "hijack-dns",
+                "protocol": "dns"
+            },
+            {
+                "clash_mode": "Direct",
+                "outbound": "Direct"
+            },
+            {
+                "clash_mode": "Global",
+                "outbound": "Global"
+            },
+            {
+                "action": "reject",
+                "protocol": "quic"
             },
             {
                 "rule_set": [
-                    "ChinaDomain",
-                    "ChinaIP",
-                    "Apple"
+                    "PrivateDomain",
+                    "PrivateIP",
+                    "ChinaMax"
                 ],
                 "outbound": "Direct"
             }

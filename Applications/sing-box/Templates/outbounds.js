@@ -23,8 +23,14 @@ config.outbounds.map(i => {
   if (['DE'].includes(i.tag)) {
     i.outbounds.push(...getTags(proxies, /德国|Germany|Deutschland(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
   }
+  if (['FR'].includes(i.tag)) {
+    i.outbounds.push(...getTags(proxies, /法国|France(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
+  }
   if (['HK'].includes(i.tag)) {
     i.outbounds.push(...getTags(proxies, /香港|Hong Kong(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
+  }
+  if (['IT'].includes(i.tag)) {
+    i.outbounds.push(...getTags(proxies, /意大利|Italy(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
   }
   if (['JP'].includes(i.tag)) {
     i.outbounds.push(...getTags(proxies, /日本|Japan(?!.*\b(1\.\d+|[2-9]\d*)倍)/))

@@ -2,46 +2,50 @@
     "dns": {
         "servers": [
             {
-                "tag": "global",
-                "type": "https",
-                "server": "1.1.1.1",
-                "detour": "Global"
-            },
-            {
                 "tag": "direct",
                 "type": "https",
-                "server": "223.6.6.6"
+                "domain_resolver": "direct-resolver",
+                "server_port": 443,
+                "server": "doh.pub",
+                "path": "/dns-query"
             },
             {
-                "tag": "fakeip",
-                "type": "fakeip",
-                "inet4_range": "198.18.0.0/15"
+                "tag": "direct-resolver",
+                "type": "udp",
+                "server_port": 53,
+                "server": "119.29.29.29"
+            },
+            {
+                "tag": "global",
+                "type": "tls",
+                "detour": "Global",
+                "domain_resolver": "global-resolver",
+                "server_port": 853,
+                "server": "8.8.8.8"
+            },
+            {
+                "tag": "global-resolver",
+                "type": "udp",
+                "detour": "Global",
+                "server_port": 53,
+                "server": "8.8.8.8"
             }
         ],
         "rules": [
             {
-                "query_type": "HTTPS",
-                "action": "reject"
+                "clash_mode": "Direct",
+                "server": "direct"
             },
             {
-                "query_type": [
-                    "A",
-                    "AAAA"
-                ],
-                "server": "fakeip",
-                "rewrite_ttl": 1
+                "clash_mode": "Global",
+                "server": "global"
             },
             {
-                "rule_set": [
-                    "Apple",
-                    "ChinaDomain",
-                    "Steam@CN"
-                ],
+                "rule_set": ["ChinaDomain"],
                 "server": "direct"
             }
         ],
         "final": "global",
-        "independent_cache": true,
         "strategy": "ipv4_only"
     }
 }
