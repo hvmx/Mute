@@ -14,50 +14,55 @@
     "dns": {
         "servers": [
             {
-                "tag": "global",
-                "type": "https",
-                "server": "1.1.1.1",
-                "detour": "Global"
-            },
-            {
                 "tag": "direct",
                 "type": "https",
-                "server": "223.6.6.6"
+                "domain_resolver": "direct-resolver",
+                "server_port": 443,
+                "server": "doh.pub",
+                "path": "/dns-query"
             },
             {
-                "tag": "fakeip",
-                "type": "fakeip",
-                "inet4_range": "198.18.0.0/15"
+                "tag": "direct-resolver",
+                "type": "udp",
+                "server_port": 53,
+                "server": "119.29.29.29"
+            },
+            {
+                "tag": "global",
+                "type": "tls",
+                "detour": "Global",
+                "domain_resolver": "global-resolver",
+                "server_port": 853,
+                "server": "8.8.8.8"
+            },
+            {
+                "tag": "global-resolver",
+                "type": "udp",
+                "detour": "Global",
+                "server_port": 53,
+                "server": "8.8.8.8"
             }
         ],
         "rules": [
             {
-                "query_type": "HTTPS",
-                "action": "reject"
+                "clash_mode": "Direct",
+                "server": "direct"
             },
             {
-                "query_type": [
-                    "A",
-                    "AAAA"
-                ],
-                "server": "fakeip",
-                "rewrite_ttl": 1
+                "clash_mode": "Global",
+                "server": "global"
             },
             {
-                "rule_set": [
-                    "Apple",
-                    "ChinaDomain",
-                    "Steam@CN"
-                ],
+                "rule_set": ["ChinaMax"],
                 "server": "direct"
             }
         ],
         "final": "global",
-        "independent_cache": true,
         "strategy": "ipv4_only"
     },
     "inbounds": [
         {
+            "tag": "tun-in",
             "type": "tun",
             "address": [
                 "172.18.0.1/30"
@@ -82,12 +87,13 @@
             "type": "selector",
             "outbounds": [
                 "DE",
+                "FR",
                 "HK",
+                "IT",
                 "JP",
                 "KR",
                 "NL",
                 "SG",
-                "TR",
                 "TW",
                 "UK",
                 "US",
@@ -101,12 +107,13 @@
             "type": "selector",
             "outbounds": [
                 "DE",
+                "FR",
                 "HK",
+                "IT",
                 "JP",
                 "KR",
                 "NL",
                 "SG",
-                "TR",
                 "TW",
                 "UK",
                 "US",
@@ -134,18 +141,39 @@
             "type": "selector",
             "outbounds": [
                 "DE",
+                "FR",
                 "HK",
+                "IT",
                 "JP",
                 "KR",
                 "NL",
                 "SG",
-                "TR",
                 "TW",
                 "UK",
                 "US",
                 "Global"
             ],
             "default": "Global",
+            "interrupt_exist_connections": true
+        },
+        {
+            "tag": "Epic",
+            "type": "selector",
+            "outbounds": [
+                "DE",
+                "FR",
+                "HK",
+                "IT",
+                "JP",
+                "KR",
+                "NL",
+                "SG",
+                "TW",
+                "UK",
+                "US",
+                "Direct"
+            ],
+            "default": "Direct",
             "interrupt_exist_connections": true
         },
         {
@@ -163,12 +191,13 @@
             "type": "selector",
             "outbounds": [
                 "DE",
+                "FR",
                 "HK",
+                "IT",
                 "JP",
                 "KR",
                 "NL",
                 "SG",
-                "TR",
                 "TW",
                 "UK",
                 "US",
@@ -182,12 +211,13 @@
             "type": "selector",
             "outbounds": [
                 "DE",
+                "FR",
                 "HK",
+                "IT",
                 "JP",
                 "KR",
                 "NL",
                 "SG",
-                "TR",
                 "TW",
                 "UK",
                 "US",
@@ -201,12 +231,13 @@
             "type": "selector",
             "outbounds": [
                 "DE",
+                "FR",
                 "HK",
+                "IT",
                 "JP",
                 "KR",
                 "NL",
                 "SG",
-                "TR",
                 "TW",
                 "UK",
                 "US",
@@ -220,12 +251,13 @@
             "type": "selector",
             "outbounds": [
                 "DE",
+                "FR",
                 "HK",
+                "IT",
                 "JP",
                 "KR",
                 "NL",
                 "SG",
-                "TR",
                 "TW",
                 "UK",
                 "US",
@@ -239,12 +271,13 @@
             "type": "selector",
             "outbounds": [
                 "DE",
+                "FR",
                 "HK",
+                "IT",
                 "JP",
                 "KR",
                 "NL",
                 "SG",
-                "TR",
                 "TW",
                 "UK",
                 "US",
@@ -259,12 +292,13 @@
             "type": "selector",
             "outbounds": [
                 "DE",
+                "FR",
                 "HK",
+                "IT",
                 "JP",
                 "KR",
                 "NL",
                 "SG",
-                "TR",
                 "TW",
                 "UK",
                 "US",
@@ -278,12 +312,13 @@
             "type": "selector",
             "outbounds": [
                 "DE",
+                "FR",
                 "HK",
+                "IT",
                 "JP",
                 "KR",
                 "NL",
                 "SG",
-                "TR",
                 "TW",
                 "UK",
                 "US",
@@ -352,142 +387,147 @@
                 "tag": "AI",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-ai-!cn.srs",
+                "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/AI.srs",
                 "download_detour": "GitHub"
             },
             {
-                "tag": "Apple",
+                "tag": "Apple@CN",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/apple-cn.srs",
+                "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/AppleCN.srs",
+                "download_detour": "GitHub"
+            },
+            {
+                "tag": "Epic",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Epic/Epic.srs",
                 "download_detour": "GitHub"
             },
             {
                 "tag": "GitHub",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Github.srs",
+                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/GitHub/GitHub.srs",
                 "download_detour": "GitHub"
             },
             {
                 "tag": "Google",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Google.srs",
+                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Google/Google.srs",
                 "download_detour": "GitHub"
             },
             {
                 "tag": "Microsoft",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Microsoft.srs",
+                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Microsoft/Microsoft.srs",
                 "download_detour": "GitHub"
             },
             {
                 "tag": "Speedtest",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/speedtest.srs",
+                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Speedtest/Speedtest.srs",
                 "download_detour": "GitHub"
             },
             {
                 "tag": "Spotify",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/Spotify/Spotify.srs",
+                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Spotify/Spotify.srs",
                 "download_detour": "GitHub"
             },
             {
                 "tag": "Steam@CN",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/SteamCN/SteamCN.srs",
+                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/SteamCN/SteamCN.srs",
                 "download_detour": "GitHub"
             },
             {
                 "tag": "Steam",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/Steam/Steam.srs",
+                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Steam/Steam.srs",
                 "download_detour": "GitHub"
             },
             {
                 "tag": "Telegram",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Telegram.srs",
+                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Telegram/Telegram.srs",
                 "download_detour": "GitHub"
             },
             {
                 "tag": "TikTok",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/TikTok.srs",
+                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/TikTok/TikTok.srs",
                 "download_detour": "GitHub"
             },
             {
                 "tag": "X",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Twitter.srs",
+                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Twitter/Twitter.srs",
                 "download_detour": "GitHub"
             },
             {
                 "tag": "YouTube",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/YouTube.srs",
+                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/YouTube/YouTube.srs",
                 "download_detour": "GitHub"
             },
             {
-                "tag": "ChinaDomain",
+                "tag": "YouTubeMusic",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-geolocation-cn.srs",
+                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/YouTubeMusic/YouTubeMusic.srs",
                 "download_detour": "GitHub"
             },
             {
-                "tag": "ChinaIP",
+                "tag": "PrivateDomain",
+                "type": "remote",
+                "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/private.srs",
+                "format": "binary",
+                "download_detour": "GitHub"
+            },
+            {
+                "tag": "PrivateIP",
+                "type": "remote",
+                "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geoip/private.srs",
+                "format": "binary",
+                "download_detour": "GitHub"
+            },
+            {
+                "tag": "ChinaMax",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-cn.srs",
+                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/ChinaMax/ChinaMax.srs",
                 "download_detour": "GitHub"
             }
         ],
         "rules": [
             {
                 "action": "sniff",
-                "inbound": [
-                    "http",
-                    "tls",
-                    "quic",
-                    "dns"
-                ],
-                "timeout": "500ms"
+                "inbound": "tun-in"
             },
             {
-                "type": "logical",
-                "mode": "or",
-                "rules": [
-                    {
-                        "port": 53
-                    },
-                    {
-                        "protocol": "dns"
-                    }
+                "domain_suffix": [
+                    "linux.do"
                 ],
-                "action": "hijack-dns"
-            },
-            {
-                "ip_is_private": true,
-                "outbound": "Direct"
+                "outbound": "Global"
             },
             {
                 "domain_suffix": [
                     "anime1.me",
                     "anicdn.com",
-                    "linux.do",
-                    "nodeseek.com"
+                    "nodeseek.com",
+                    "tdgo.shop",
+                    "ffzy-plays.com"
                 ],
                 "outbound": "Extra"
             },
@@ -499,8 +539,21 @@
             },
             {
                 "rule_set": [
+                    "Apple@CN"
+                ],
+                "outbound": "Direct"
+            },
+            {
+                "rule_set": [
+                    "Epic"
+                ],
+                "outbound": "Epic"
+            },
+            {
+                "rule_set": [
+                    "Google",
                     "YouTube",
-                    "Google"
+                    "YouTubeMusic"
                 ],
                 "outbound": "Google"
             },
@@ -558,14 +611,27 @@
                 ],
                 "outbound": "X"
             },
+                        {
+                "action": "hijack-dns",
+                "protocol": "dns"
+            },
             {
-                "action": "resolve"
+                "clash_mode": "Direct",
+                "outbound": "Direct"
+            },
+            {
+                "clash_mode": "Global",
+                "outbound": "Global"
+            },
+            {
+                "action": "reject",
+                "protocol": "quic"
             },
             {
                 "rule_set": [
-                    "ChinaDomain",
-                    "ChinaIP",
-                    "Apple"
+                    "PrivateDomain",
+                    "PrivateIP",
+                    "ChinaMax"
                 ],
                 "outbound": "Direct"
             }
