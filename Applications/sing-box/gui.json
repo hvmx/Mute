@@ -254,7 +254,7 @@
             "interrupt_exist_connections": true
         },
         {
-            "tag": "SG01",
+            "tag": "SG",
             "type": "selector",
             "outbounds": [
                 "SG01",
