@@ -6,18 +6,19 @@ try {
 }
 let compatible_tag = 'Block'
 let proxies01 = await produceArtifact({
-  name,
-  type: 'kt',
+  name: 'kt',
+  type: 'subscription',
   platform: 'sing-box',
   produceType: 'internal',
 })
 let proxies02 = await produceArtifact({
-  name,
-  type: 'lxy',
+  name: 'lxy',
+  type: 'subscription',
   platform: 'sing-box',
   produceType: 'internal',
 })
-const proxies = [...proxies01, ...proxies02]; 
+
+let proxies = [...proxies01, ...proxies02]
 
 config.outbounds.push(...proxies)
 
@@ -25,43 +26,57 @@ config.outbounds.map(i => {
   if (['Select'].includes(i.tag)) {
     i.outbounds.push(...getTags(proxies))
   }
-  if (['DE'].includes(i.tag)) {
-    i.outbounds.push(...getTags(proxies, /德国|Germany|Deutschland(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
+  // if (['DE'].includes(i.tag)) {
+  //   i.outbounds.push(...getTags(proxies, /德国|Germany|Deutschland(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
+  // }
+  // if (['FR'].includes(i.tag)) {
+  //   i.outbounds.push(...getTags(proxies, /法国|France(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
+  // }
+  if (['HK01'].includes(i.tag)) {
+    i.outbounds.push(...getTags(proxies01, /香港|Hong Kong(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
   }
-  if (['FR'].includes(i.tag)) {
-    i.outbounds.push(...getTags(proxies, /法国|France(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
+  if (['HK02'].includes(i.tag)) {
+    i.outbounds.push(...getTags(proxies02, /香港|Hong Kong(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
   }
-  if (['HK'].includes(i.tag)) {
-    i.outbounds.push(...getTags(proxies, /香港|Hong Kong(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
+  // if (['IT'].includes(i.tag)) {
+  //   i.outbounds.push(...getTags(proxies, /意大利|Italy(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
+  // }
+  if (['JP01'].includes(i.tag)) {
+    i.outbounds.push(...getTags(proxies01, /日本|Japan(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
   }
-  if (['IT'].includes(i.tag)) {
-    i.outbounds.push(...getTags(proxies, /意大利|Italy(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
+  if (['JP02'].includes(i.tag)) {
+    i.outbounds.push(...getTags(proxies02, /日本|Japan(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
   }
-  if (['JP'].includes(i.tag)) {
-    i.outbounds.push(...getTags(proxies, /日本|Japan(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
+  if (['KR01'].includes(i.tag)) {
+    i.outbounds.push(...getTags(proxies01, /韩国|Korea(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
   }
-  if (['KR'].includes(i.tag)) {
-    i.outbounds.push(...getTags(proxies, /韩国|Korea(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
+  if (['KR02'].includes(i.tag)) {
+    i.outbounds.push(...getTags(proxies02, /韩国|Korea(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
   }
-  if (['NL'].includes(i.tag)) {
-    i.outbounds.push(...getTags(proxies, /荷兰|Netherlands(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
+  // if (['NL'].includes(i.tag)) {
+  //   i.outbounds.push(...getTags(proxies, /荷兰|Netherlands(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
+  // }
+  if (['SG01'].includes(i.tag)) {
+    i.outbounds.push(...getTags(proxies01, /新加坡|Singapore(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
   }
-  if (['SG'].includes(i.tag)) {
-    i.outbounds.push(...getTags(proxies, /新加坡|Singapore(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
+  if (['SG02'].includes(i.tag)) {
+    i.outbounds.push(...getTags(proxies02, /新加坡|Singapore(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
   }
-  if (['TR'].includes(i.tag)) {
-    i.outbounds.push(...getTags(proxies, /土耳其|Türkiye(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
+  // if (['TR'].includes(i.tag)) {
+  //   i.outbounds.push(...getTags(proxies, /土耳其|Türkiye(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
+  // }
+  // if (['TW'].includes(i.tag)) {
+  //   i.outbounds.push(...getTags(proxies, /台湾|Taiwan(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
+  // }
+  // if (['UK'].includes(i.tag)) {
+  //   i.outbounds.push(...getTags(proxies, /英国|Britain|United Kingdom(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
+  // }
+  if (['US01'].includes(i.tag)) {
+    i.outbounds.push(...getTags(proxies01, /美国|America|United States(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
   }
-  if (['TW'].includes(i.tag)) {
-    i.outbounds.push(...getTags(proxies, /台湾|Taiwan(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
+  if (['US02'].includes(i.tag)) {
+    i.outbounds.push(...getTags(proxies02, /美国|America|United States(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
   }
-  if (['UK'].includes(i.tag)) {
-    i.outbounds.push(...getTags(proxies, /英国|Britain|United Kingdom(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
-  }
-  if (['US'].includes(i.tag)) {
-    i.outbounds.push(...getTags(proxies, /美国|America|United States(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
-  }
-  
   
 })
 
