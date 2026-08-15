@@ -1,5 +1,3 @@
-let { type, name } = $arguments
-type = /^1$|col|组合/i.test(type) ? 'collection' : 'subscription'
 let config
 try {
   config = JSON.parse($content ?? $files[0])
@@ -7,12 +5,19 @@ try {
   throw new Error('配置文件不是合法的 JSON')
 }
 let compatible_tag = 'Block'
-let proxies = await produceArtifact({
+let proxies01 = await produceArtifact({
   name,
-  type: /^1$|col/i.test(type) ? 'collection' : 'subscription',
+  type: 'kt',
   platform: 'sing-box',
   produceType: 'internal',
 })
+let proxies02 = await produceArtifact({
+  name,
+  type: 'lxy',
+  platform: 'sing-box',
+  produceType: 'internal',
+})
+const proxies = [...proxies01, ...proxies02]; 
 
 config.outbounds.push(...proxies)
 
