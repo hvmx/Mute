@@ -45,12 +45,6 @@
             },
             {
                 "rule_set": [
-                    "Speedtest"
-                ],
-                "outbound": "Speedtest"
-            },
-            {
-                "rule_set": [
                     "Spotify"
                 ],
                 "outbound": "Spotify"

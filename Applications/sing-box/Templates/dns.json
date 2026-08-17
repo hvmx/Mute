@@ -41,7 +41,7 @@
                 "server": "global"
             },
             {
-                "rule_set": ["ChinaDomain"],
+                "rule_set": ["ChinaMax"],
                 "server": "direct"
             }
         ],

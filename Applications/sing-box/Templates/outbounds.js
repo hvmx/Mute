@@ -52,6 +52,9 @@ for (const [index, name] of SUBSCRIPTIONS.entries()) {
   }
 }
 
+regionOutbounds.sort((a, b) => a.tag.localeCompare(b.tag))
+
+
 config.outbounds.push(
   ...allProxies,
   ...regionOutbounds,
