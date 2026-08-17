@@ -4,90 +4,79 @@ try {
 } catch (e) {
   throw new Error('配置文件不是合法的 JSON')
 }
-let compatible_tag = 'Block'
-let proxies01 = await produceArtifact({
-  name: 'kt',
-  type: 'subscription',
-  platform: 'sing-box',
-  produceType: 'internal',
-})
-let proxies02 = await produceArtifact({
-  name: 'lxy',
-  type: 'subscription',
-  platform: 'sing-box',
-  produceType: 'internal',
-})
+const COMPATIBLE_TAG = 'Block'
 
-let proxies = [...proxies01, ...proxies02]
+const SUBSCRIPTIONS = ['kt', 'lxy']
 
-config.outbounds.push(...proxies)
+const REGIONS = [
+  ['HK', /香港|Hong Kong(?!.*\b(1\.\d+|[2-9]\d*)倍)/],
+  ['JP', /日本|Japan(?!.*\b(1\.\d+|[2-9]\d*)倍)/],
+  ['KR', /韩国|Korea(?!.*\b(1\.\d+|[2-9]\d*)倍)/],
+  ['SG', /新加坡|Singapore(?!.*\b(1\.\d+|[2-9]\d*)倍)/],
+  ['US', /美国|America|United States(?!.*\b(1\.\d+|[2-9]\d*)倍)/],
+]
 
-config.outbounds.map(i => {
-  if (['Select'].includes(i.tag)) {
-    i.outbounds.push(...getTags(proxies))
-  }
-  // if (['DE'].includes(i.tag)) {
-  //   i.outbounds.push(...getTags(proxies, /德国|Germany|Deutschland(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
-  // }
-  // if (['FR'].includes(i.tag)) {
-  //   i.outbounds.push(...getTags(proxies, /法国|France(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
-  // }
-  if (['HK01'].includes(i.tag)) {
-    i.outbounds.push(...getTags(proxies01, /香港|Hong Kong(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
-  }
-  if (['HK02'].includes(i.tag)) {
-    i.outbounds.push(...getTags(proxies02, /香港|Hong Kong(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
-  }
-  // if (['IT'].includes(i.tag)) {
-  //   i.outbounds.push(...getTags(proxies, /意大利|Italy(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
-  // }
-  if (['JP01'].includes(i.tag)) {
-    i.outbounds.push(...getTags(proxies01, /日本|Japan(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
-  }
-  if (['JP02'].includes(i.tag)) {
-    i.outbounds.push(...getTags(proxies02, /日本|Japan(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
-  }
-  if (['KR01'].includes(i.tag)) {
-    i.outbounds.push(...getTags(proxies01, /韩国|Korea(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
-  }
-  if (['KR02'].includes(i.tag)) {
-    i.outbounds.push(...getTags(proxies02, /韩国|Korea(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
-  }
-  // if (['NL'].includes(i.tag)) {
-  //   i.outbounds.push(...getTags(proxies, /荷兰|Netherlands(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
-  // }
-  if (['SG01'].includes(i.tag)) {
-    i.outbounds.push(...getTags(proxies01, /新加坡|Singapore(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
-  }
-  if (['SG02'].includes(i.tag)) {
-    i.outbounds.push(...getTags(proxies02, /新加坡|Singapore(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
-  }
-  // if (['TR'].includes(i.tag)) {
-  //   i.outbounds.push(...getTags(proxies, /土耳其|Türkiye(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
-  // }
-  // if (['TW'].includes(i.tag)) {
-  //   i.outbounds.push(...getTags(proxies, /台湾|Taiwan(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
-  // }
-  // if (['UK'].includes(i.tag)) {
-  //   i.outbounds.push(...getTags(proxies, /英国|Britain|United Kingdom(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
-  // }
-  if (['US01'].includes(i.tag)) {
-    i.outbounds.push(...getTags(proxies01, /美国|America|United States(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
-  }
-  if (['US02'].includes(i.tag)) {
-    i.outbounds.push(...getTags(proxies02, /美国|America|United States(?!.*\b(1\.\d+|[2-9]\d*)倍)/))
-  }
-  
-})
+const REGION_GROUPS = new Set([
+  'Global',
+  'AI',
+  'Google',
+  'Microsoft',
+  'Spotify',
+  'TikTok',
+  'X',
+])
 
-config.outbounds.forEach(outbound => {
-  if (Array.isArray(outbound.outbounds) && outbound.outbounds.length === 0) {
-    outbound.outbounds.push(compatible_tag);
+const allProxies = []
+const regionOutbounds = []
+
+for (const [index, name] of SUBSCRIPTIONS.entries()) {
+  const proxies = await produceArtifact({
+    name,
+    type: 'subscription',
+    platform: 'sing-box',
+    produceType: 'internal',
+  })
+
+  allProxies.push(...proxies)
+
+  for (const [region, regex] of REGIONS) {
+    const tags = getTags(proxies, regex)
+
+    if (!tags.length) continue
+
+    regionOutbounds.push({
+      tag: `${region}${String(index + 1).padStart(2, '0')}`,
+      type: 'urltest',
+      outbounds: tags,
+    })
   }
-});
+}
+
+config.outbounds.push(
+  ...allProxies,
+  ...regionOutbounds,
+)
+
+const regionTags = getTags(regionOutbounds)
+
+for (const outbound of config.outbounds) {
+  if (!Array.isArray(outbound.outbounds)) continue
+
+  if (outbound.tag === 'Select') {
+    outbound.outbounds.unshift(...getTags(allProxies))
+  } else if (REGION_GROUPS.has(outbound.tag)) {
+    outbound.outbounds.unshift(...regionTags)
+  }
+
+  if (!outbound.outbounds.length) {
+    outbound.outbounds.push(COMPATIBLE_TAG)
+  }
+}
 
 $content = JSON.stringify(config, null, 2)
 
-function getTags(proxies, regex) {
-  return (regex ? proxies.filter(p => regex.test(p.tag)) : proxies).map(p => p.tag)
+function getTags(items, regex) {
+  return items
+    .filter(({ tag }) => !regex || regex.test(tag))
+    .map(({ tag }) => tag)
 }

@@ -53,7 +53,9 @@
                 "server": "global"
             },
             {
-                "rule_set": ["ChinaMax"],
+                "rule_set": [
+                    "ChinaMax"
+                ],
                 "server": "direct"
             }
         ],
@@ -86,20 +88,19 @@
             "tag": "Global",
             "type": "selector",
             "outbounds": [
-                "HK",
-                "JP",
-                "KR",
-                "SG",
-                "US",
                 "Select"
             ],
-            "default": "JP",
+            "default": "Select",
             "interrupt_exist_connections": true
         },
         {
             "tag": "Select",
             "type": "selector",
-            "outbounds": []
+            "outbounds": [
+                "Direct"
+            ],
+            "default": "Direct",
+            "interrupt_exist_connections": true
         },
         {
             "tag": "Direct",
@@ -113,11 +114,6 @@
             "tag": "AI",
             "type": "selector",
             "outbounds": [
-                "HK",
-                "JP",
-                "KR",
-                "SG",
-                "US",
                 "Global"
             ],
             "default": "Global",
@@ -147,11 +143,6 @@
             "tag": "Google",
             "type": "selector",
             "outbounds": [
-                "HK",
-                "JP",
-                "KR",
-                "SG",
-                "US",
                 "Global"
             ],
             "default": "Global",
@@ -161,11 +152,6 @@
             "tag": "Microsoft",
             "type": "selector",
             "outbounds": [
-                "HK",
-                "JP",
-                "KR",
-                "SG",
-                "US",
                 "Direct"
             ],
             "default": "Direct",
@@ -175,11 +161,6 @@
             "tag": "Spotify",
             "type": "selector",
             "outbounds": [
-                 "HK",
-                "JP",
-                "KR",
-                "SG",
-                "US",
                 "Direct"
             ],
             "default": "Direct",
@@ -199,11 +180,6 @@
             "tag": "TikTok",
             "type": "selector",
             "outbounds": [
-                "HK",
-                "JP",
-                "KR",
-                "SG",
-                "US",
                 "Global"
             ],
             "default": "Global",
@@ -213,115 +189,10 @@
             "tag": "X",
             "type": "selector",
             "outbounds": [
-                "HK",
-                "JP",
-                "KR",
-                "SG",
-                "US",
                 "Global"
             ],
             "default": "Global",
             "interrupt_exist_connections": true
-        },
-        {
-            "tag": "HK",
-            "type": "selector",
-            "outbounds": [
-                "HK01",
-                "HK02"
-            ],
-            "default": "HK01",
-            "interrupt_exist_connections": true
-        },
-        {
-            "tag": "JP",
-            "type": "selector",
-            "outbounds": [
-                "JP01",
-                "JP02"
-            ],
-            "default": "JP01",
-            "interrupt_exist_connections": true
-        },
-        {
-            "tag": "KR",
-            "type": "selector",
-            "outbounds": [
-                "KR01",
-                "KR02"
-            ],
-            "default": "KR01",
-            "interrupt_exist_connections": true
-        },
-        {
-            "tag": "SG",
-            "type": "selector",
-            "outbounds": [
-                "SG01",
-                "SG02"
-            ],
-            "default": "SG01",
-            "interrupt_exist_connections": true
-        },
-        {
-            "tag": "US",
-            "type": "selector",
-            "outbounds": [
-                "US01",
-                "US02"
-            ],
-            "default": "US01",
-            "interrupt_exist_connections": true
-        },
-        {
-            "tag": "HK01",
-            "type": "urltest",
-            "outbounds": []
-        },
-        {
-            "tag": "HK02",
-            "type": "urltest",
-            "outbounds": []
-        },
-        {
-            "tag": "JP01",
-            "type": "urltest",
-            "outbounds": []
-        },
-        {
-            "tag": "JP02",
-            "type": "urltest",
-            "outbounds": []
-        },
-        {
-            "tag": "KR01",
-            "type": "urltest",
-            "outbounds": []
-        },
-        {
-            "tag": "KR02",
-            "type": "urltest",
-            "outbounds": []
-        },
-        {
-            "tag": "SG01",
-            "type": "urltest",
-            "outbounds": []
-        },
-        {
-            "tag": "SG02",
-            "type": "urltest",
-            "outbounds": []
-        },
-        {
-            "tag": "US01",
-            "type": "urltest",
-            "outbounds": []
-        },
-        {
-            "tag": "US02",
-            "type": "urltest",
-            "outbounds": []
         }
     ],
     "route": {
@@ -535,7 +406,7 @@
                 ],
                 "outbound": "X"
             },
-                        {
+            {
                 "action": "hijack-dns",
                 "protocol": "dns"
             },
