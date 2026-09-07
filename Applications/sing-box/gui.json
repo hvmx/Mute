@@ -1,66 +1,39 @@
 {
+    "$schema": "https://sing-box.sagernet.org/schema.json",
     "log": {
         "disabled": true,
         "level": "info",
         "output": "sing-box.log",
         "timestamp": true
     },
-    "experimental": {
-        "cache_file": {
-            "enabled": true,
-            "store_fakeip": true
-        }
-    },
     "dns": {
         "servers": [
-            {
-                "tag": "direct",
-                "type": "https",
-                "domain_resolver": "direct-resolver",
-                "server_port": 443,
-                "server": "doh.pub",
-                "path": "/dns-query"
+            {"tag": "hosts_fix","type": "hosts","predefined": {
+                "dns.alidns.com": ["223.5.5.5","223.6.6.6"],
+                "doh.pub": ["1.12.12.21","120.53.53.53"]}
             },
-            {
-                "tag": "direct-resolver",
-                "type": "udp",
-                "server_port": 53,
-                "server": "119.29.29.29"
-            },
-            {
-                "tag": "global",
-                "type": "tls",
-                "detour": "Global",
-                "domain_resolver": "global-resolver",
-                "server_port": 853,
-                "server": "8.8.8.8"
-            },
-            {
-                "tag": "global-resolver",
-                "type": "udp",
-                "detour": "Global",
-                "server_port": 53,
-                "server": "8.8.8.8"
-            }
+            {"tag": "ali-doh","type": "https","server": "dns.alidns.com","domain_resolver": "hosts_fix"},
+            {"tag": "ali-udp","type": "udp","server": "223.5.5.5"},
+            {"tag": "tx-doh","type": "https","server": "doh.pub","domain_resolver": "hosts_fix"},
+            {"tag": "tx-udp","type": "udp","server": "119.29.29.29"},
+            {"tag": "fakeip","type": "fakeip","inet4_range": "198.18.0.0/15","inet6_range": "fc00::/18"},
+            {"tag": "local","type": "local","neighbor_domain": [".local",".lan"]}
         ],
         "rules": [
-            {
-                "clash_mode": "Direct",
-                "server": "direct"
-            },
-            {
-                "clash_mode": "Global",
-                "server": "global"
-            },
-            {
-                "rule_set": [
-                    "ChinaMax"
-                ],
-                "server": "direct"
-            }
+            {"query_type": "HTTPS","action": "reject"},
+            {"domain_suffix": ["lancache.steamcontent.com","10099.com.cn","msftconnecttest.com","msftncsi.com","local","lan","home","internal","corp","example.com"],"server": "local"},
+            {"query_type": ["A","AAAA"],"server": "fakeip","rewrite_ttl": 1},
+            {"clash_mode": "Global", "server": "fakeip"},
+            {"clash_mode": "Direct", "server": "local"},
+            {"action": "evaluate","server": "ali-doh","tag": "ali"},
+            {"action": "evaluate","server": "tx-doh","tag": "tencent"},
+            {"match_response": "ali","response_rcode": "NOERROR","action": "respond","race": true},
+            {"match_response": "tencent","response_rcode": "NOERROR","action": "respond","race": true}
         ],
-        "final": "global",
-        "strategy": "ipv4_only"
+        "reverse_mapping": true,
+        "strategy": "ipv4_only",
+        "optimistic": true,
+        "final": "ali-doh"
     },
     "inbounds": [
         {
@@ -186,7 +159,7 @@
             "interrupt_exist_connections": true
         },
         {
-            "tag": "X",
+            "tag": "Twitter",
             "type": "selector",
             "outbounds": [
                 "Global"
@@ -196,242 +169,62 @@
         }
     ],
     "route": {
-        "default_domain_resolver": {
-            "server": "direct"
-        },
         "rule_set": [
             {
-                "tag": "AI",
-                "type": "remote",
-                "format": "binary",
-                "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/AI.srs",
-                "download_detour": "GitHub"
+                "tag": ["AI", "AppleCN", "ChinaDomain", "ChinaIP"],
+                "type": "remote", "format": "binary",
+                "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/{tag}.srs"
             },
             {
-                "tag": "Apple@CN",
-                "type": "remote",
-                "format": "binary",
-                "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/AppleCN.srs",
-                "download_detour": "GitHub"
-            },
-            {
-                "tag": "Epic",
-                "type": "remote",
-                "format": "binary",
-                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Epic/Epic.srs",
-                "download_detour": "GitHub"
-            },
-            {
-                "tag": "GitHub",
-                "type": "remote",
-                "format": "binary",
-                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/GitHub/GitHub.srs",
-                "download_detour": "GitHub"
-            },
-            {
-                "tag": "Google",
-                "type": "remote",
-                "format": "binary",
-                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Google/Google.srs",
-                "download_detour": "GitHub"
-            },
-            {
-                "tag": "Microsoft",
-                "type": "remote",
-                "format": "binary",
-                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Microsoft/Microsoft.srs",
-                "download_detour": "GitHub"
-            },
-            {
-                "tag": "Speedtest",
-                "type": "remote",
-                "format": "binary",
-                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Speedtest/Speedtest.srs",
-                "download_detour": "GitHub"
-            },
-            {
-                "tag": "Spotify",
-                "type": "remote",
-                "format": "binary",
-                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Spotify/Spotify.srs",
-                "download_detour": "GitHub"
-            },
-            {
-                "tag": "Steam@CN",
-                "type": "remote",
-                "format": "binary",
-                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/SteamCN/SteamCN.srs",
-                "download_detour": "GitHub"
-            },
-            {
-                "tag": "Steam",
-                "type": "remote",
-                "format": "binary",
-                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Steam/Steam.srs",
-                "download_detour": "GitHub"
-            },
-            {
-                "tag": "Telegram",
-                "type": "remote",
-                "format": "binary",
-                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Telegram/Telegram.srs",
-                "download_detour": "GitHub"
-            },
-            {
-                "tag": "TikTok",
-                "type": "remote",
-                "format": "binary",
-                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/TikTok/TikTok.srs",
-                "download_detour": "GitHub"
-            },
-            {
-                "tag": "X",
-                "type": "remote",
-                "format": "binary",
-                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Twitter/Twitter.srs",
-                "download_detour": "GitHub"
-            },
-            {
-                "tag": "YouTube",
-                "type": "remote",
-                "format": "binary",
-                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/YouTube/YouTube.srs",
-                "download_detour": "GitHub"
-            },
-            {
-                "tag": "YouTubeMusic",
-                "type": "remote",
-                "format": "binary",
-                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/YouTubeMusic/YouTubeMusic.srs",
-                "download_detour": "GitHub"
-            },
-            {
-                "tag": "PrivateDomain",
-                "type": "remote",
-                "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/private.srs",
-                "format": "binary",
-                "download_detour": "GitHub"
-            },
-            {
-                "tag": "PrivateIP",
-                "type": "remote",
-                "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geoip/private.srs",
-                "format": "binary",
-                "download_detour": "GitHub"
-            },
-            {
-                "tag": "ChinaMax",
-                "type": "remote",
-                "format": "binary",
-                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/ChinaMax/ChinaMax.srs",
-                "download_detour": "GitHub"
+                "tag": ["Epic", "GitHub", "Google", "Microsoft", "Spotify", "SteamCN", 
+                        "Steam", "Telegram", "TikTok", "Twitter", "YouTube", "YouTubeMusic"],
+                "type": "remote", "format": "binary",
+                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/{tag}/{tag}.srs"
             }
         ],
         "rules": [
-            {
-                "action": "sniff",
-                "inbound": "tun-in"
-            },
-            {
-                "rule_set": [
-                    "AI"
-                ],
-                "outbound": "AI"
-            },
-            {
-                "rule_set": [
-                    "Apple@CN"
-                ],
-                "outbound": "Direct"
-            },
-            {
-                "rule_set": [
-                    "Epic"
-                ],
-                "outbound": "Epic"
-            },
-            {
-                "rule_set": [
-                    "Google",
-                    "YouTube",
-                    "YouTubeMusic"
-                ],
-                "outbound": "Google"
-            },
-            {
-                "rule_set": [
-                    "GitHub"
-                ],
-                "outbound": "GitHub"
-            },
-            {
-                "rule_set": [
-                    "Microsoft"
-                ],
-                "outbound": "Microsoft"
-            },
-            {
-                "rule_set": [
-                    "Spotify"
-                ],
-                "outbound": "Spotify"
-            },
-            {
-                "rule_set": [
-                    "Steam@CN"
-                ],
-                "outbound": "Direct"
-            },
-            {
-                "rule_set": [
-                    "Steam"
-                ],
-                "outbound": "Steam"
-            },
-            {
-                "rule_set": [
-                    "Telegram"
-                ],
-                "outbound": "Global"
-            },
-            {
-                "rule_set": [
-                    "TikTok"
-                ],
-                "outbound": "TikTok"
-            },
-            {
-                "rule_set": [
-                    "X"
-                ],
-                "outbound": "X"
-            },
-            {
-                "action": "hijack-dns",
-                "protocol": "dns"
-            },
-            {
-                "clash_mode": "Direct",
-                "outbound": "Direct"
-            },
-            {
-                "clash_mode": "Global",
-                "outbound": "Global"
-            },
-            {
-                "action": "reject",
-                "protocol": "quic"
-            },
-            {
-                "rule_set": [
-                    "PrivateDomain",
-                    "PrivateIP",
-                    "ChinaMax"
-                ],
-                "outbound": "Direct"
-            }
+            {"action": "sniff", "sniffer": ["http","tls","quic","dns"]},
+            {"protocol": "dns", "action": "hijack-dns"},
+            {"ip_is_private": true, "outbound": "Direct"},
+            {"clash_mode": "Direct", "outbound": "Direct"},
+            {"clash_mode": "Global", "outbound": "Global"},
+            {"rule_set": ["AppleCN", "SteamCN"], "outbound": "Direct"},
+            {"rule_set": "AI", "outbound": "AI"},
+            {"rule_set": "Epic", "outbound": "Epic"},
+            {"rule_set": ["Google", "YouTube", "YouTubeMusic"], "outbound": "Google"},
+            {"rule_set": "GitHub", "outbound": "GitHub"},
+            {"rule_set": "Microsoft", "outbound": "Microsoft"},
+            {"rule_set": "Spotify", "outbound": "Spotify"},
+            {"rule_set": "Steam", "outbound": "Steam"},
+            {"rule_set": "Telegram", "outbound": "Global"},
+            {"rule_set": "TikTok", "outbound": "TikTok"},
+            {"rule_set": "Twitter", "outbound": "Twitter"},
+            {"action": "resolve"},
+            {"rule_set": ["ChinaDomain", "ChinaIP"], "outbound": "Direct"}
         ],
         "auto_detect_interface": true,
+        "default_http_client": "default",
+        "default_domain_resolver": "ali-udp",
         "final": "Final"
-    }
+    },
+    "http_clients": [
+        {
+            "tag": "default",
+            "detour": "GitHub"
+        }
+    ],
+    "services": [
+        {
+            "type": "api",
+            "tag": "sing-box dashboard",
+            "listen": "127.0.0.1",
+            "listen_port": 9090,
+            "secret": "",
+            "access_control_allow_origin": [
+                "http://sing-box-dashboard.sagernet.org",
+                "http://dash.sing-box.app"
+            ],
+            "access_control_allow_private_network": true
+        }
+    ]
 }

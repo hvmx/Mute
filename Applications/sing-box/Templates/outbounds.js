@@ -14,11 +14,13 @@ const REGIONS = [
   ['KR', /韩国|Korea(?!.*\b(1\.\d+|[2-9]\d*)倍)/],
   ['SG', /新加坡|Singapore(?!.*\b(1\.\d+|[2-9]\d*)倍)/],
   ['US', /美国|America|United States(?!.*\b(1\.\d+|[2-9]\d*)倍)/],
+  ['TW', /台湾|Taiwan(?!.*\b(1\.\d+|[2-9]\d*)倍)/]
 ]
 
 const REGION_GROUPS = new Set([
   'Global',
   'AI',
+  'Epic',
   'Google',
   'Microsoft',
   'Spotify',
