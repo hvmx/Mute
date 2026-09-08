@@ -30,6 +30,15 @@
             {
                 "rule_set": "ChinaDomain",
                 "server": "dns-ali"
+            },
+            {
+                "action": "evaluate",
+                "server": "dns-google"
+            },
+            {
+                "match_response": true,
+                "rule_set": "ChinaIP",
+                "server": "dns-ali"
             }
         ],
         "final": "dns-google",
