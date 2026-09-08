@@ -4,7 +4,7 @@ try {
 } catch (e) {
   throw new Error('配置文件不是合法的 JSON')
 }
-const COMPATIBLE_TAG = 'Block'
+const COMPATIBLE_TAG = 'Direct'
 
 const SUBSCRIPTIONS = ['kt', 'lxy']
 
@@ -21,11 +21,13 @@ const REGION_GROUPS = new Set([
   'Global',
   'AI',
   'Epic',
+  'GitHub',
   'Google',
   'Microsoft',
   'Spotify',
+  'Steam',
   'TikTok',
-  'X',
+  'Twitter',
 ])
 
 const allProxies = []
@@ -67,9 +69,7 @@ const regionTags = getTags(regionOutbounds)
 for (const outbound of config.outbounds) {
   if (!Array.isArray(outbound.outbounds)) continue
 
-  if (outbound.tag === 'Select') {
-    outbound.outbounds.unshift(...getTags(allProxies))
-  } else if (REGION_GROUPS.has(outbound.tag)) {
+  if (REGION_GROUPS.has(outbound.tag)) {
     outbound.outbounds.unshift(...regionTags)
   }
 
