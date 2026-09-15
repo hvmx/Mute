@@ -1,9 +1,0 @@
-{
-    "route": {
-        "default_domain_resolver": {
-            "server": "direct"
-        },
-        "auto_detect_interface": true,
-        "final": "Final"
-    }
-}

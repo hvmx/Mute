@@ -13,21 +13,14 @@ const REGIONS = [
   ['JP', /日本|Japan(?!.*\b(1\.\d+|[2-9]\d*)倍)/],
   ['KR', /韩国|Korea(?!.*\b(1\.\d+|[2-9]\d*)倍)/],
   ['SG', /新加坡|Singapore(?!.*\b(1\.\d+|[2-9]\d*)倍)/],
-  ['US', /美国|America|United States(?!.*\b(1\.\d+|[2-9]\d*)倍)/],
-  ['TW', /台湾|Taiwan(?!.*\b(1\.\d+|[2-9]\d*)倍)/]
+  ['US', /美国|America|United States(?!.*\b(1\.\d+|[2-9]\d*)倍)/]
 ]
 
 const REGION_GROUPS = new Set([
-  'Global',
+  'Proxy',
   'AI',
-  'Epic',
-  'GitHub',
-  'Google',
-  'Microsoft',
-  'Spotify',
-  'Steam',
-  'TikTok',
-  'Twitter',
+  'Games',
+  'Spotify'
 ])
 
 const allProxies = []
