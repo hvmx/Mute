@@ -6,18 +6,18 @@
         "output": "sing-box.log",
         "timestamp": true
     },
+    "experimental": {
+        "cache_file": {
+            "enabled": true,
+            "store_dns": true
+        }
+    },
     "dns": {
         "servers": [
             {
                 "tag": "dns-cn",
                 "type": "udp",
                 "server": "223.5.5.5"
-            },
-            {
-                "tag": "dns-proxy",
-                "type": "https",
-                "detour": "Proxy",
-                "server": "1.1.1.1"
             },
             {
                 "tag": "fakeip",
@@ -39,14 +39,9 @@
                 "server": "dns-cn"
             },
             {
-                "query_type": [
-                    "A",
-                    "AAAA"
-                ],
                 "server": "fakeip"
             }
         ],
-        "final": "dns-proxy",
         "strategy": "prefer_ipv6",
         "optimistic": true
     },
@@ -62,65 +57,17 @@
             "strict_route": true
         }
     ],
-    "outbounds": [
+    "http_clients": [
         {
-            "tag": "Proxy",
-            "type": "selector",
-            "outbounds": [
-                "Direct"
-            ],
-            "interrupt_exist_connections": true
-        },
-        {
-            "tag": "AI",
-            "type": "selector",
-            "outbounds": [],
-            "interrupt_exist_connections": true
-        },
-        {
-            "tag": "Games",
-            "type": "selector",
-            "outbounds": [
-                "Direct"
-            ],
-            "interrupt_exist_connections": true
-        },
-        {
-            "tag": "Spotify",
-            "type": "selector",
-            "outbounds": [
-                "Direct"
-            ],
-            "interrupt_exist_connections": true
-        },
-        {
-            "tag": "Direct",
-            "type": "direct"
+            "tag": "route-download",
+            "detour": "Proxy"
         }
     ],
     "route": {
-        "rule_set": [
-            {
-                "tag": [
-                    "ai",
-                    "apple-cn",
-                    "cn",
-                    "cnip",
-                    "games-cn",
-                    "games",
-                    "google-cn",
-                    "microsoft-cn",
-                    "private",
-                    "privateip",
-                    "proxy",
-                    "spotify",
-                    "telegramip"
-                ],
-                "type": "remote",
-                "format": "binary",
-                "url": "https://github.com/DustinWin/ruleset_geodata/raw/sing-box-ruleset/{tag}.srs"
-            }
-        ],
+        "auto_detect_interface": true,
+        "default_http_client": "route-download",
+        "default_domain_resolver": "dns-cn",
+        "final": "Proxy",
         "rules": [
             {
                 "type": "logical",
@@ -186,21 +133,63 @@
                 "outbound": "Direct"
             }
         ],
-        "auto_detect_interface": true,
-        "default_http_client": "route-download",
-        "default_domain_resolver": "dns-cn",
-        "final": "Proxy"
+        "rule_set": [
+            {
+                "tag": [
+                    "ai",
+                    "apple-cn",
+                    "cn",
+                    "cnip",
+                    "games-cn",
+                    "games",
+                    "google-cn",
+                    "microsoft-cn",
+                    "private",
+                    "privateip",
+                    "proxy",
+                    "spotify",
+                    "telegramip"
+                ],
+                "type": "remote",
+                "format": "binary",
+                "url": "https://github.com/DustinWin/ruleset_geodata/raw/sing-box-ruleset/{tag}.srs"
+            }
+        ]
     },
-    "http_clients": [
+    "outbounds": [
         {
-            "tag": "route-download",
-            "detour": "Proxy"
+            "tag": "Proxy",
+            "type": "selector",
+            "outbounds": [
+                "Direct"
+            ],
+            "interrupt_exist_connections": true
+        },
+        {
+            "tag": "AI",
+            "type": "selector",
+            "outbounds": [],
+            "interrupt_exist_connections": true
+        },
+        {
+            "tag": "Games",
+            "type": "selector",
+            "outbounds": [
+                "Direct"
+            ],
+            "interrupt_exist_connections": true
+        },
+        {
+            "tag": "Spotify",
+            "type": "selector",
+            "outbounds": [
+                "Direct"
+            ],
+            "interrupt_exist_connections": true
+        },
+        {
+            "tag": "Direct",
+            "type": "direct"
         }
-    ],
-    "experimental": {
-        "cache_file": {
-            "enabled": true,
-            "store_dns": true
-        }
-    }
+    ]
 }
