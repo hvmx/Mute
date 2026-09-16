@@ -28,21 +28,6 @@
         ],
         "rules": [
             {
-                "type": "logical",
-                "mode": "and",
-                "rules": [
-                    {
-                        "ip_version": 6
-                    },
-                    {
-                        "default_interface_address": "2000::/3",
-                        "invert": true
-                    }
-                ],
-                "action": "reject",
-                "no_drop": true
-            },
-            {
                 "rule_set": [
                     "apple-cn",
                     "cn",
@@ -147,6 +132,21 @@
             {
                 "ip_is_private": true,
                 "outbound": "Direct"
+            },
+            {
+                "type": "logical",
+                "mode": "and",
+                "rules": [
+                    {
+                        "ip_version": 6
+                    },
+                    {
+                        "default_interface_address": "2000::/3",
+                        "invert": true
+                    }
+                ],
+                "action": "reject",
+                "no_drop": true
             },
             {
                 "rule_set": [
