@@ -9,16 +9,9 @@
     "dns": {
         "servers": [
             {
-                "tag": "fakeip",
-                "type": "fakeip",
-                "inet4_range": "198.18.0.0/15",
-                "inet6_range": "2001:2::/48"
-            },
-            {
                 "tag": "dns-cn",
                 "type": "udp",
-                "server": "223.5.5.5",
-                "server_port": 53
+                "server": "223.5.5.5"
             },
             {
                 "tag": "dns-proxy",
@@ -38,25 +31,22 @@
                     "microsoft-cn",
                     "private"
                 ],
-                "server": "dns-cn"
+                "query_type": "AAAA",
+                "action": "predefined",
+                "rcode": "NOERROR"
             },
             {
-                "query_type": [
-                    "A",
-                    "AAAA"
+                "rule_set": [
+                    "ai",
+                    "games",
+                    "proxy",
+                    "spotify"
                 ],
-                "server": "fakeip"
+                "server": "dns-proxy"
             }
         ],
-        "final": "dns-proxy",
-        "reverse_mapping": true,
-        "strategy": "prefer_ipv6",
-        "timeout": "10s",
-        "cache_capacity": 8192,
-        "optimistic": {
-            "enabled": true,
-            "timeout": "1h0m0s"
-        }
+        "final": "dns-cn",
+        "optimistic": true
     },
     "inbounds": [
         {
@@ -139,6 +129,14 @@
                 "action": "hijack-dns"
             },
             {
+                "network": [
+                    "tcp",
+                    "udp"
+                ],
+                "port": 853,
+                "action": "reject"
+            },
+            {
                 "ip_is_private": true,
                 "outbound": "Direct"
             },
@@ -178,14 +176,6 @@
                     "cnip"
                 ],
                 "outbound": "Direct"
-            },
-            {
-                "network": [
-                    "tcp",
-                    "udp"
-                ],
-                "port": 853,
-                "action": "reject"
             }
         ],
         "auto_detect_interface": true,
