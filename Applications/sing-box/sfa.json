@@ -31,22 +31,18 @@
                     "microsoft-cn",
                     "private"
                 ],
-                "query_type": "AAAA",
-                "action": "predefined"
+                "server": "dns-cn"
             },
             {
-                "rule_set": [
-                    "apple-cn",
-                    "cn",
-                    "games-cn",
-                    "google-cn",
-                    "microsoft-cn",
-                    "private"
+                "query_type": [
+                    "A",
+                    "AAAA"
                 ],
-                "server": "dns-cn"
+                "server": "fakeip"
             }
         ],
         "final": "dns-proxy",
+        "strategy": "prefer_ipv6",
         "optimistic": true
     },
     "inbounds": [
@@ -94,7 +90,11 @@
         },
         {
             "tag": "Direct",
-            "type": "direct"
+            "type": "direct",
+            "domain_resolver": {
+                "server": "dns-cn",
+                "strategy": "ipv4_only"
+            }
         }
     ],
     "route": {
@@ -123,11 +123,6 @@
         "rules": [
             {
                 "action": "sniff"
-            },
-            {
-                "inbound": "tun-in",
-                "protocol": "dns",
-                "action": "hijack-dns"
             },
             {
                 "network": [
