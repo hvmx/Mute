@@ -19,6 +19,12 @@
                 "detour": "Proxy",
                 "domain_resolver": "dns-cn",
                 "server": "cloudflare-dns.com"
+            },
+            {
+                "tag": "fakeip",
+                "type": "fakeip",
+                "inet4_range": "198.18.0.0/15",
+                "inet6_range": "2001:2::/48"
             }
         ],
         "rules": [
@@ -29,29 +35,20 @@
                     "games-cn",
                     "google-cn",
                     "microsoft-cn",
-                    "private",
-                    "DouYin"
-                ],
-                "query_type": "AAAA",
-                "action": "reject"
-            },
-            {
-                "rule_set": [
-                    "apple-cn",
-                    "cn",
-                    "games-cn",
-                    "google-cn",
-                    "microsoft-cn",
-                    "private",
-                    "DouYin"
+                    "private"
                 ],
                 "server": "dns-cn"
             },
             {
+                "query_type": [
+                    "A",
+                    "AAAA"
+                ],
                 "server": "fakeip"
             }
         ],
         "final": "dns-proxy",
+        "strategy": "ipv4_only",
         "optimistic": true
     },
     "inbounds": [
@@ -99,23 +96,11 @@
         },
         {
             "tag": "Direct",
-            "type": "direct",
-            "domain_resolver": {
-                "server": "dns-cn",
-                "strategy": "ipv4_only"
-            }
+            "type": "direct"
         }
     ],
     "route": {
         "rule_set": [
-            {
-                "tag": [
-                    "DouYin"
-                ],
-                "type": "remote",
-                "format": "binary",
-                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/{tag}/{tag}.srs"
-            },
             {
                 "tag": [
                     "ai",
@@ -160,8 +145,7 @@
                     "apple-cn",
                     "games-cn",
                     "google-cn",
-                    "microsoft-cn",
-                    "DouYin"
+                    "microsoft-cn"
                 ],
                 "outbound": "Direct"
             },
