@@ -32,6 +32,19 @@
                     "private",
                     "DouYin"
                 ],
+                "query_type": "AAAA",
+                "action": "reject"
+            },
+            {
+                "rule_set": [
+                    "apple-cn",
+                    "cn",
+                    "games-cn",
+                    "google-cn",
+                    "microsoft-cn",
+                    "private",
+                    "DouYin"
+                ],
                 "server": "dns-cn"
             },
             {
@@ -39,7 +52,6 @@
             }
         ],
         "final": "dns-proxy",
-        "strategy": "prefer_ipv6",
         "optimistic": true
     },
     "inbounds": [
