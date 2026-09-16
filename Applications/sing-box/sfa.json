@@ -34,15 +34,10 @@
                 "server": "dns-cn"
             },
             {
-                "query_type": [
-                    "A",
-                    "AAAA"
-                ],
                 "server": "fakeip"
             }
         ],
         "final": "dns-proxy",
-        "strategy": "prefer_ipv6",
         "optimistic": true
     },
     "inbounds": [
