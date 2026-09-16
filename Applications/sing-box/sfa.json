@@ -29,7 +29,8 @@
                     "games-cn",
                     "google-cn",
                     "microsoft-cn",
-                    "private"
+                    "private",
+                    "DouYin"
                 ],
                 "server": "dns-cn"
             },
@@ -38,7 +39,7 @@
             }
         ],
         "final": "dns-proxy",
-        "strategy": "prefer_ipv4",
+        "strategy": "prefer_ipv6",
         "optimistic": true
     },
     "inbounds": [
@@ -86,11 +87,23 @@
         },
         {
             "tag": "Direct",
-            "type": "direct"
+            "type": "direct",
+            "domain_resolver": {
+                "server": "dns-cn",
+                "strategy": "ipv4_only"
+            }
         }
     ],
     "route": {
         "rule_set": [
+            {
+                "tag": [
+                    "DouYin"
+                ],
+                "type": "remote",
+                "format": "binary",
+                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/{tag}/{tag}.srs"
+            },
             {
                 "tag": [
                     "ai",
@@ -135,7 +148,8 @@
                     "apple-cn",
                     "games-cn",
                     "google-cn",
-                    "microsoft-cn"
+                    "microsoft-cn",
+                    "DouYin"
                 ],
                 "outbound": "Direct"
             },
