@@ -38,6 +38,7 @@
             }
         ],
         "final": "dns-proxy",
+        "strategy": "prefer_ipv4",
         "optimistic": true
     },
     "inbounds": [
@@ -85,11 +86,7 @@
         },
         {
             "tag": "Direct",
-            "type": "direct",
-            "domain_resolver": {
-                "server": "dns-cn",
-                "strategy": "ipv4_only"
-            }
+            "type": "direct"
         }
     ],
     "route": {
