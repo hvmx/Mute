@@ -44,8 +44,7 @@
                     "microsoft-cn",
                     "private"
                 ],
-                "server": "dns-cn",
-                "disable_optimistic_cache": true
+                "server": "dns-cn"
             },
             {
                 "rule_set": [
@@ -58,7 +57,8 @@
             }
         ],
         "final": "dns-cn",
-        "optimistic": false
+        "disable_cache": true,
+        "reverse_mapping": true
     },
     "inbounds": [
         {
