@@ -24,11 +24,15 @@
         "rules": [
             {
                 "rule_set": [
-                    "DouYin"
+                    "apple-cn",
+                    "cn",
+                    "games-cn",
+                    "google-cn",
+                    "microsoft-cn",
+                    "private"
                 ],
                 "query_type": "AAAA",
-                "action": "predefined",
-                "rcode": "NOERROR"
+                "action": "predefined"
             },
             {
                 "rule_set": [
@@ -39,21 +43,10 @@
                     "microsoft-cn",
                     "private"
                 ],
-                "query_type": "AAAA",
-                "action": "predefined",
-                "rcode": "NOERROR"
-            },
-            {
-                "rule_set": [
-                    "ai",
-                    "games",
-                    "proxy",
-                    "spotify"
-                ],
-                "server": "dns-proxy"
+                "server": "dns-cn"
             }
         ],
-        "final": "dns-cn",
+        "final": "dns-proxy",
         "optimistic": true
     },
     "inbounds": [
@@ -125,14 +118,6 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://github.com/DustinWin/ruleset_geodata/raw/sing-box-ruleset/{tag}.srs"
-            },
-            {
-                "tag": [
-                    "DouYin"
-                ],
-                "type": "remote",
-                "format": "binary",
-                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/{tag}/{tag}.srs"
             }
         ],
         "rules": [
@@ -154,12 +139,6 @@
             },
             {
                 "ip_is_private": true,
-                "outbound": "Direct"
-            },
-            {
-                 "rule_set": [
-                    "DouYin"
-                ],
                 "outbound": "Direct"
             },
             {
