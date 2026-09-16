@@ -37,6 +37,18 @@
             },
             {
                 "rule_set": [
+                    "apple-cn",
+                    "cn",
+                    "games-cn",
+                    "google-cn",
+                    "microsoft-cn",
+                    "private"
+                ],
+                "server": "dns-cn",
+                "disable_optimistic_cache": true
+            },
+            {
+                "rule_set": [
                     "ai",
                     "games",
                     "proxy",
@@ -46,7 +58,7 @@
             }
         ],
         "final": "dns-cn",
-        "optimistic": true
+        "optimistic": false
     },
     "inbounds": [
         {
