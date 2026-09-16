@@ -24,12 +24,7 @@
         "rules": [
             {
                 "rule_set": [
-                    "apple-cn",
-                    "cn",
-                    "games-cn",
-                    "google-cn",
-                    "microsoft-cn",
-                    "private"
+                    "DouYin"
                 ],
                 "query_type": "AAAA",
                 "action": "predefined",
@@ -44,7 +39,9 @@
                     "microsoft-cn",
                     "private"
                 ],
-                "server": "dns-cn"
+                "query_type": "AAAA",
+                "action": "predefined",
+                "rcode": "NOERROR"
             },
             {
                 "rule_set": [
@@ -57,8 +54,7 @@
             }
         ],
         "final": "dns-cn",
-        "disable_cache": true,
-        "reverse_mapping": true
+        "optimistic": true
     },
     "inbounds": [
         {
@@ -129,6 +125,14 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://github.com/DustinWin/ruleset_geodata/raw/sing-box-ruleset/{tag}.srs"
+            },
+            {
+                "tag": [
+                    "DouYin"
+                ],
+                "type": "remote",
+                "format": "binary",
+                "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/{tag}/{tag}.srs"
             }
         ],
         "rules": [
@@ -150,6 +154,12 @@
             },
             {
                 "ip_is_private": true,
+                "outbound": "Direct"
+            },
+            {
+                 "rule_set": [
+                    "DouYin"
+                ],
                 "outbound": "Direct"
             },
             {
