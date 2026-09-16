@@ -17,8 +17,7 @@
                 "tag": "dns-proxy",
                 "type": "https",
                 "detour": "Proxy",
-                "domain_resolver": "dns-cn",
-                "server": "cloudflare-dns.com"
+                "server": "1.1.1.1"
             },
             {
                 "tag": "fakeip",
@@ -28,6 +27,21 @@
             }
         ],
         "rules": [
+            {
+                "type": "logical",
+                "mode": "and",
+                "rules": [
+                    {
+                        "ip_version": 6
+                    },
+                    {
+                        "default_interface_address": "2000::/3",
+                        "invert": true
+                    }
+                ],
+                "action": "reject",
+                "no_drop": true
+            },
             {
                 "rule_set": [
                     "apple-cn",
@@ -48,7 +62,7 @@
             }
         ],
         "final": "dns-proxy",
-        "strategy": "ipv4_only",
+        "strategy": "prefer_ipv6",
         "optimistic": true
     },
     "inbounds": [
@@ -127,12 +141,8 @@
                 "action": "sniff"
             },
             {
-                "network": [
-                    "tcp",
-                    "udp"
-                ],
-                "port": 853,
-                "action": "reject"
+                "protocol": "dns",
+                "action": "hijack-dns"
             },
             {
                 "ip_is_private": true,
