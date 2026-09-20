@@ -4,7 +4,7 @@ try {
 } catch (e) {
   throw new Error('配置文件不是合法的 JSON')
 }
-const COMPATIBLE_TAG = 'Direct'
+const DIRECT_TAG = 'Direct'
 
 const SUBSCRIPTIONS = ['kt', 'lxy']
 
@@ -16,12 +16,13 @@ const REGIONS = [
   ['US', /美国|America|United States(?!.*\b(1\.\d+|[2-9]\d*)倍)/]
 ]
 
-const REGION_GROUPS = new Set([
-  'Proxy',
-  'AI',
-  'Games',
-  'Spotify'
-])
+const GROUPS = {
+  Proxy: ['*', DIRECT_TAG],
+  AI: ['*'],
+  Games: ['*', DIRECT_TAG],
+  Spotify: ['*', DIRECT_TAG],
+  TikTok: ['JP'],
+}
 
 const allProxies = []
 const regionOutbounds = []
@@ -41,33 +42,43 @@ for (const [index, name] of SUBSCRIPTIONS.entries()) {
 
     if (!tags.length) continue
 
-    regionOutbounds.push({
-      tag: `${region}${String(index + 1).padStart(2, '0')}`,
-      type: 'urltest',
-      outbounds: tags,
-    })
+    if (tags.length) {
+      regionOutbounds.push({
+        tag: `${region}${String(index + 1).padStart(2, '0')}`,
+        type: 'urltest',
+        outbounds: tags,
+      })
+    }
   }
 }
 
 regionOutbounds.sort((a, b) => a.tag.localeCompare(b.tag))
 
-
-config.outbounds.push(
-  ...allProxies,
-  ...regionOutbounds,
-)
-
 const regionTags = getTags(regionOutbounds)
 
-for (const outbound of config.outbounds) {
-  if (!Array.isArray(outbound.outbounds)) continue
+config.outbounds.push(...allProxies, ...regionOutbounds)
 
-  if (REGION_GROUPS.has(outbound.tag)) {
-    outbound.outbounds.unshift(...regionTags)
+for (const [tag, group] of Object.entries(GROUPS)) {
+  let outbound = config.outbounds.find(item => item.tag === tag)
+
+  if (!outbound) {
+    outbound = {
+      tag,
+      type: 'selector',
+      outbounds: [],
+    }
+    config.outbounds.push(outbound)
   }
 
+  outbound.outbounds = [
+    ...new Set([
+      ...getGroupTags(group),
+      ...outbound.outbounds,
+    ]),
+  ]
+
   if (!outbound.outbounds.length) {
-    outbound.outbounds.push(COMPATIBLE_TAG)
+    outbound.outbounds.push(DIRECT_TAG)
   }
 }
 
@@ -77,4 +88,14 @@ function getTags(items, regex) {
   return items
     .filter(({ tag }) => !regex || regex.test(tag))
     .map(({ tag }) => tag)
+}
+
+
+function getGroupTags(group) {
+  return group.flatMap(item => {
+    if (item === '*') return regionTags
+    if (item === DIRECT_TAG) return [DIRECT_TAG]
+
+    return regionTags.filter(tag => tag.startsWith(item))
+  })
 }

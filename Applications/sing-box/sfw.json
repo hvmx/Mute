@@ -1,31 +1,19 @@
 {
     "$schema": "https://sing-box.sagernet.org/schema.json",
-    "log": {
-        "disabled": true,
-        "level": "info",
-        "output": "sing-box.log",
-        "timestamp": true
-    },
+    "log": {"level": "error","timestamp": true},
+    "experimental": { "cache_file": {"enabled": true,"store_fakeip": true}},
     "dns": {
         "servers": [
+            {
+                "tag": "dns-cn",
+                "type": "udp",
+                "server": "223.5.5.5"
+            },
             {
                 "tag": "fakeip",
                 "type": "fakeip",
                 "inet4_range": "198.18.0.0/15",
                 "inet6_range": "2001:2::/48"
-            },
-            {
-                "tag": "dns-cn",
-                "type": "udp",
-                "server": "223.5.5.5",
-                "server_port": 53
-            },
-            {
-                "tag": "dns-proxy",
-                "type": "https",
-                "detour": "Proxy",
-                "domain_resolver": "dns-cn",
-                "server": "cloudflare-dns.com"
             }
         ],
         "rules": [
@@ -41,22 +29,11 @@
                 "server": "dns-cn"
             },
             {
-                "query_type": [
-                    "A",
-                    "AAAA"
-                ],
                 "server": "fakeip"
             }
         ],
-        "final": "dns-proxy",
-        "reverse_mapping": true,
         "strategy": "prefer_ipv6",
-        "timeout": "10s",
-        "cache_capacity": 8192,
-        "optimistic": {
-            "enabled": true,
-            "timeout": "1h0m0s"
-        }
+        "optimistic": true
     },
     "inbounds": [
         {
@@ -70,48 +47,49 @@
             "strict_route": true
         }
     ],
-    "outbounds": [
-        {
-            "tag": "Proxy",
-            "type": "selector",
-            "outbounds": [
-                "Direct"
-            ],
-            "interrupt_exist_connections": true
-        },
-        {
-            "tag": "AI",
-            "type": "selector",
-            "outbounds": [],
-            "interrupt_exist_connections": true
-        },
-        {
-            "tag": "Games",
-            "type": "selector",
-            "outbounds": [
-                "Direct"
-            ],
-            "interrupt_exist_connections": true
-        },
-        {
-            "tag": "Spotify",
-            "type": "selector",
-            "outbounds": [
-                "Direct"
-            ],
-            "interrupt_exist_connections": true
-        },
-        {
-            "tag": "Direct",
-            "type": "direct"
-        }
-    ],
+    "http_clients": [{"tag": "route-download","detour": "Proxy"}],
     "route": {
+        "auto_detect_interface": true,
+        "default_http_client": "route-download",
+        "default_domain_resolver": "dns-cn",
+        "final": "Proxy",
+        "rules": [
+            {
+                "type": "logical",
+                "mode": "and",
+                "rules": [{"ip_version": 6 },{"default_interface_address": "2000::/3","invert": true }],
+                "action": "reject",
+                "no_drop": true
+            },
+            { "rule_set": [ "telegramip" ], "invert": true, "action": "sniff" },
+            { "type": "logical", "mode": "or", "rules": [ { "protocol": [ "dns" ] }, { "port": 53 } ], "action": "hijack-dns" },
+            {
+                "rule_set": [
+                    "private",
+                    "apple-cn",
+                    "applications",
+                    "games-cn",
+                    "google-cn",
+                    "microsoft-cn"
+                ],
+                "outbound": "Direct"
+            },
+            { "rule_set": "ai","outbound": "AI"},
+            { "rule_set": "games","outbound": "Games"},
+            { "rule_set": "spotify","outbound": "Spotify"},
+            { "rule_set": "tiktok","outbound": "TikTok"},
+            { "rule_set": "proxy", "outbound": "Proxy" },
+            { "rule_set": "cn", "outbound": "Direct" },
+            { "ip_is_private": true, "outbound": "Direct" },
+            { "rule_set": "cnip", "outbound": "Direct" },
+            { "rule_set": "telegramip", "outbound": "Proxy" }
+        ],
         "rule_set": [
             {
                 "tag": [
                     "ai",
                     "apple-cn",
+                    "applications",
                     "cn",
                     "cnip",
                     "games-cn",
@@ -119,90 +97,23 @@
                     "google-cn",
                     "microsoft-cn",
                     "private",
-                    "privateip",
                     "proxy",
                     "spotify",
-                    "telegramip"
+                    "telegramip",
+                    "tiktok"
                 ],
                 "type": "remote",
                 "format": "binary",
                 "url": "https://github.com/DustinWin/ruleset_geodata/raw/sing-box-ruleset/{tag}.srs"
             }
-        ],
-        "rules": [
-            {
-                "action": "sniff"
-            },
-            {
-                "inbound": "tun-in",
-                "protocol": "dns",
-                "action": "hijack-dns"
-            },
-            {
-                "ip_is_private": true,
-                "outbound": "Direct"
-            },
-            {
-                "rule_set": [
-                    "private",
-                    "privateip",
-                    "apple-cn",
-                    "games-cn",
-                    "google-cn",
-                    "microsoft-cn"
-                ],
-                "outbound": "Direct"
-            },
-            {
-                "rule_set": "ai",
-                "outbound": "AI"
-            },
-            {
-                "rule_set": "games",
-                "outbound": "Games"
-            },
-            {
-                "rule_set": "spotify",
-                "outbound": "Spotify"
-            },
-            {
-                "rule_set": [
-                    "telegramip",
-                    "proxy"
-                ],
-                "outbound": "Proxy"
-            },
-            {
-                "rule_set": [
-                    "cn",
-                    "cnip"
-                ],
-                "outbound": "Direct"
-            },
-            {
-                "network": [
-                    "tcp",
-                    "udp"
-                ],
-                "port": 853,
-                "action": "reject"
-            }
-        ],
-        "auto_detect_interface": true,
-        "default_http_client": "route-download",
-        "default_domain_resolver": "dns-cn",
-        "final": "Proxy"
+        ]
     },
-    "http_clients": [
-        {
-            "tag": "route-download",
-            "detour": "Proxy"
-        }
-    ],
-    "experimental": {
-        "cache_file": {
-            "enabled": true,
-            "store_dns": true
-        }
-    }
+    "outbounds": [
+        {"tag": "Proxy","type": "selector","outbounds": ["Direct"]},
+        {"tag": "AI","type": "selector","outbounds": []},
+        {"tag": "Games","type": "selector","outbounds": ["Direct"]},
+        {"tag": "Spotify","type": "selector","outbounds": ["Direct"]},
+        {"tag": "TikTok","type": "selector","outbounds": []},
+        {"tag": "Direct","type": "direct"}
+    ]
 }
