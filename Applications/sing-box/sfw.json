@@ -63,19 +63,14 @@
             },
             { "rule_set": [ "telegramip" ], "invert": true, "action": "sniff" },
             { "type": "logical", "mode": "or", "rules": [ { "protocol": [ "dns" ] }, { "port": 53 } ], "action": "hijack-dns" },
-            {
-                "rule_set": [
-                    "private",
-                    "apple-cn",
-                    "applications",
-                    "games-cn",
-                    "google-cn",
-                    "microsoft-cn"
-                ],
-                "outbound": "Direct"
-            },
-            { "rule_set": "ai","outbound": "AI"},
+            { "rule_set": "private","outbound": "Direct"},
+            { "rule_set": "applications","outbound": "Direct"},
+            { "rule_set": "microsoft-cn","outbound": "Direct"},
+            { "rule_set": "apple-cn","outbound": "Direct"},
+            { "rule_set": "google-cn","outbound": "Direct"},
+            { "rule_set": "games-cn","outbound": "Direct"},
             { "rule_set": "games","outbound": "Games"},
+            { "rule_set": "ai","outbound": "AI"},
             { "rule_set": "spotify","outbound": "Spotify"},
             { "rule_set": "tiktok","outbound": "TikTok"},
             { "rule_set": "proxy", "outbound": "Proxy" },
