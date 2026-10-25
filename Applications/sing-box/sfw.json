@@ -64,7 +64,6 @@
             { "rule_set": [ "telegramip" ], "invert": true, "action": "sniff" },
             { "type": "logical", "mode": "or", "rules": [ { "protocol": [ "dns" ] }, { "port": 53 } ], "action": "hijack-dns" },
             { "rule_set": "private","outbound": "Direct"},
-            { "rule_set": "applications","outbound": "Direct"},
             { "rule_set": "microsoft-cn","outbound": "Direct"},
             { "rule_set": "apple-cn","outbound": "Direct"},
             { "rule_set": "google-cn","outbound": "Direct"},
@@ -84,7 +83,6 @@
                 "tag": [
                     "ai",
                     "apple-cn",
-                    "applications",
                     "cn",
                     "cnip",
                     "games-cn",
