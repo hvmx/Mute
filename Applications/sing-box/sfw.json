@@ -80,9 +80,9 @@
             { "rule_set": "geosite-google","outbound": "Google"},
             { "rule_set": "geosite-spotify","outbound": "Spotify"},
             { "rule_set": "geosite-geolocation-!cn", "outbound": "Proxy" },
-            { "rule_set": "geosite-geolocation-cn","outbound": "direct"},
-            { "ip_is_private": true, "outbound": "direct" },
-            { "rule_set": "geoip-cn", "outbound": "direct" }
+            { "rule_set": "geosite-geolocation-cn","outbound": "Direct"},
+            { "ip_is_private": true, "outbound": "Direct" },
+            { "rule_set": "geoip-cn", "outbound": "Direct" }
         ],
         "rule_set": [
             {
@@ -115,6 +115,7 @@
         {"tag": "Games","type": "selector","outbounds": []},
         {"tag": "GitHub","type": "selector","outbounds": []},
         {"tag": "Google","type": "selector","outbounds": []},
-        {"tag": "Spotify","type": "selector","outbounds": []}
+        {"tag": "Spotify","type": "selector","outbounds": []},
+        {"tag": "Direct","type": "direct"}
     ]
 }

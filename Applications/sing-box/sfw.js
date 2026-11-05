@@ -4,7 +4,7 @@ try {
 } catch (e) {
   throw new Error('配置文件不是合法的 JSON')
 }
-const DIRECT_TAG = 'direct'
+const DIRECT_TAG = 'Direct'
 
 const SUBSCRIPTIONS = ['kt', 'lxy']
 
