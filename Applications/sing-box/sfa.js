@@ -21,7 +21,6 @@ const GROUPS = {
   AI: ['*'],
   Games: ['*', DIRECT_TAG],
   Spotify: ['*', DIRECT_TAG],
-  TikTok: ['JP'],
 }
 
 const allProxies = []

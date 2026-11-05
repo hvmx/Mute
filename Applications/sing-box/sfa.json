@@ -5,9 +5,25 @@
     "dns": {
         "servers": [
             {
-                "tag": "dns-cn",
-                "type": "udp",
-                "server": "223.5.5.5"
+                "type": "hosts",
+                "tag": "hosts",
+                "predefined": {
+                    "dns.alidns.com": ["223.5.5.5","223.6.6.6","2400:3200::1","2400:3200:baba::1"],
+                    "dns.google": ["8.8.8.8","8.8.4.4","2001:4860:4860::8888","2001:4860:4860::8844"]
+                }
+            },
+            {
+                "tag": "dns-google",
+                "type": "https",
+                "server": "dns.google",
+                "domain_resolver": "hosts",
+                "detour": "Proxy"
+            },
+            {
+                "tag": "dns-ali",
+                "type": "https",
+                "server": "dns.alidns.com",
+                "domain_resolver": "hosts"
             },
             {
                 "tag": "fakeip",
@@ -19,14 +35,9 @@
         "rules": [
             {
                 "rule_set": [
-                    "apple-cn",
-                    "cn",
-                    "games-cn",
-                    "google-cn",
-                    "microsoft-cn",
-                    "private"
+                    "geosite-geolocation-cn"
                 ],
-                "server": "dns-cn"
+                "server": "dns-ali"
             },
             {
                 "server": "fakeip"
@@ -47,11 +58,11 @@
             "strict_route": true
         }
     ],
-    "http_clients": [{"tag": "route-download","detour": "Proxy"}],
+    "http_clients": [{"tag": "default-download","detour": "Proxy"}],
     "route": {
         "auto_detect_interface": true,
-        "default_http_client": "route-download",
-        "default_domain_resolver": "dns-cn",
+        "default_http_client": "default-download",
+        "default_domain_resolver": "dns-ali",
         "final": "Proxy",
         "rules": [
             {
@@ -61,59 +72,50 @@
                 "action": "reject",
                 "no_drop": true
             },
-            { "rule_set": [ "telegramip" ], "invert": true, "action": "sniff" },
+            { "action": "sniff" },
             { "type": "logical", "mode": "or", "rules": [ { "protocol": [ "dns" ] }, { "port": 53 } ], "action": "hijack-dns" },
-            {
-                "rule_set": [
-                    "private",
-                    "apple-cn",
-                    "applications",
-                    "games-cn",
-                    "google-cn",
-                    "microsoft-cn"
-                ],
-                "outbound": "Direct"
-            },
-            { "rule_set": "ai","outbound": "AI"},
-            { "rule_set": "games","outbound": "Games"},
-            { "rule_set": "spotify","outbound": "Spotify"},
-            { "rule_set": "tiktok","outbound": "TikTok"},
-            { "rule_set": "proxy", "outbound": "Proxy" },
-            { "rule_set": "cn", "outbound": "Direct" },
+            { "rule_set": "geosite-category-ai-!cn","outbound": "AI"},
+            { "rule_set": "geosite-category-games-!cn","outbound": "Games"},
+            { "rule_set": "geosite-github","outbound": "GitHub"},
+            { "rule_set": "geosite-google","outbound": "Google"},
+            { "rule_set": "geosite-spotify","outbound": "Spotify"},
+            { "rule_set": "geosite-geolocation-!cn", "outbound": "Proxy" },
+            { "rule_set": "geosite-geolocation-cn","outbound": "Direct"},
             { "ip_is_private": true, "outbound": "Direct" },
-            { "rule_set": "cnip", "outbound": "Direct" },
-            { "rule_set": "telegramip", "outbound": "Proxy" }
+            { "rule_set": "geoip-cn", "outbound": "Direct" }
         ],
         "rule_set": [
             {
                 "tag": [
-                    "ai",
-                    "apple-cn",
-                    "applications",
-                    "cn",
-                    "cnip",
-                    "games-cn",
-                    "games",
-                    "google-cn",
-                    "microsoft-cn",
-                    "private",
-                    "proxy",
-                    "spotify",
-                    "telegramip",
-                    "tiktok"
+                    "geosite-category-ai-!cn",
+                    "geosite-category-games-!cn",
+                    "geosite-github",
+                    "geosite-google",
+                    "geosite-spotify",
+                    "geosite-geolocation-cn",
+                    "geosite-geolocation-!cn"
                 ],
                 "type": "remote",
                 "format": "binary",
-                "url": "https://github.com/DustinWin/ruleset_geodata/raw/sing-box-ruleset/{tag}.srs"
+                "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/{tag}.srs"
+            },
+            {
+                "tag": [
+                    "geoip-cn"
+                ],
+                "type": "remote",
+                "format": "binary",
+                "url": "https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/{tag}.srs"
             }
         ]
     },
     "outbounds": [
-        {"tag": "Proxy","type": "selector","outbounds": ["Direct"]},
+        {"tag": "Proxy","type": "selector","outbounds": []},
         {"tag": "AI","type": "selector","outbounds": []},
-        {"tag": "Games","type": "selector","outbounds": ["Direct"]},
-        {"tag": "Spotify","type": "selector","outbounds": ["Direct"]},
-        {"tag": "TikTok","type": "selector","outbounds": []},
+        {"tag": "Games","type": "selector","outbounds": []},
+        {"tag": "GitHub","type": "selector","outbounds": []},
+        {"tag": "Google","type": "selector","outbounds": []},
+        {"tag": "Spotify","type": "selector","outbounds": []},
         {"tag": "Direct","type": "direct"}
     ]
 }
