@@ -4,7 +4,7 @@ try {
 } catch (e) {
   throw new Error('配置文件不是合法的 JSON')
 }
-const DIRECT_TAG = 'Direct'
+const DIRECT_TAG = 'direct'
 
 const SUBSCRIPTIONS = ['kt', 'lxy']
 
@@ -20,8 +20,10 @@ const GROUPS = {
   Proxy: ['*', DIRECT_TAG],
   AI: ['*'],
   Games: ['*', DIRECT_TAG],
+  GitHub: ['*', DIRECT_TAG],
+  Google: ['*'],
   Spotify: ['*', DIRECT_TAG],
-  TikTok: ['JP'],
+  // TikTok: ['JP'],
 }
 
 const allProxies = []

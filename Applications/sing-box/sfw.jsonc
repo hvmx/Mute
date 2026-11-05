@@ -1,0 +1,122 @@
+{
+    "$schema": "https://sing-box.sagernet.org/schema.json",
+    "log": {"level": "error","timestamp": true},
+    "experimental": { "cache_file": {"enabled": true,"store_fakeip": true}},
+    "dns": {
+        "servers": [
+            {
+                "type": "hosts",
+                "tag": "hosts",
+                "predefined": {
+                    "dns.alidns.com": ["223.5.5.5","223.6.6.6","2400:3200::1","2400:3200:baba::1"],
+                    "dns.google": ["8.8.8.8","8.8.4.4","2001:4860:4860::8888","2001:4860:4860::8844"]
+                }
+            },
+            {
+                "tag": "dns-google",
+                "type": "https",
+                "server": "dns.google",
+                "domain_resolver": "hosts",
+                "detour": "Proxy"
+            },
+            {
+                "tag": "dns-ali",
+                "type": "https",
+                "server": "dns.alidns.com",
+                "domain_resolver": "hosts"
+            },
+            {
+                "tag": "fakeip",
+                "type": "fakeip",
+                "inet4_range": "198.18.0.0/15",
+                "inet6_range": "2001:2::/48"
+            }
+        ],
+        "rules": [
+            {
+                "rule_set": [
+                    "geosite-geolocation-cn"
+                ],
+                "server": "dns-ali"
+            },
+            {
+                "server": "fakeip"
+            }
+        ],
+        "strategy": "prefer_ipv6",
+        "optimistic": true
+    },
+    "inbounds": [
+        {
+            "tag": "tun-in",
+            "type": "tun",
+            "address": [
+                "172.19.0.1/30",
+                "fdfe:dcba:9876::1/126"
+            ],
+            "auto_route": true,
+            "strict_route": true
+        }
+    ],
+    "http_clients": [{"tag": "default-download","detour": "Proxy"}],
+    "route": {
+        "auto_detect_interface": true,
+        "default_http_client": "default-download",
+        "default_domain_resolver": "dns-ali",
+        "final": "Proxy",
+        "rules": [
+            {
+                "type": "logical",
+                "mode": "and",
+                "rules": [{"ip_version": 6 },{"default_interface_address": "2000::/3","invert": true }],
+                "action": "reject",
+                "no_drop": true
+            },
+            { "action": "sniff" },
+            { "type": "logical", "mode": "or", "rules": [ { "protocol": [ "dns" ] }, { "port": 53 } ], "action": "hijack-dns" },
+            { "rule_set": "geosite-category-ai-!cn","outbound": "AI"},
+            { "rule_set": "geosite-category-games-!cn","outbound": "Games"},
+            { "rule_set": "geosite-github","outbound": "GitHub"},
+            { "rule_set": "geosite-google","outbound": "Google"},
+            { "rule_set": "geosite-spotify","outbound": "Spotify"},
+            { "rule_set": "geosite-geolocation-!cn", "outbound": "Proxy" },
+            { "rule_set": "geosite-geolocation-cn","outbound": "direct"},
+            { "ip_is_private": true, "outbound": "direct" },
+            { "rule_set": "geoip-cn", "outbound": "direct" }
+        ],
+        "rule_set": [
+            {
+                "tag": [
+                    //"geosite-apple",
+                    "geosite-category-ai-!cn",
+                    "geosite-category-games-!cn",
+                    "geosite-github",
+                    "geosite-google",
+                    "geosite-spotify",
+                    //"geosite-tiktok",
+                    "geosite-geolocation-cn",
+                    "geosite-geolocation-!cn"
+                ],
+                "type": "remote",
+                "format": "binary",
+                "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/{tag}.srs"
+            },
+            {
+                "tag": [
+                    "geoip-cn"
+                ],
+                "type": "remote",
+                "format": "binary",
+                "url": "https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/{tag}.srs"
+            }
+        ]
+    },
+    "outbounds": [
+        {"tag": "Proxy","type": "selector","outbounds": []},
+        {"tag": "AI","type": "selector","outbounds": []},
+        {"tag": "Games","type": "selector","outbounds": []},
+        {"tag": "GitHub","type": "selector","outbounds": []},
+        {"tag": "Google","type": "selector","outbounds": []},
+        {"tag": "Spotify","type": "selector","outbounds": []}
+    ]
+}
