@@ -20,7 +20,10 @@ const GROUPS = {
   Proxy: ['*', DIRECT_TAG],
   AI: ['*'],
   Games: ['*', DIRECT_TAG],
+  GitHub: ['*', DIRECT_TAG],
+  Google: ['*'],
   Spotify: ['*', DIRECT_TAG],
+  // TikTok: ['JP'],
 }
 
 const allProxies = []
