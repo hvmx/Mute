@@ -7,7 +7,7 @@ try {
 const DIRECT_TAG = 'Direct'
 
 const SUBSCRIPTIONS = String($arguments.subs ?? '')
-  .split(',')
+  .split('.')
   .map(s => s.trim())
   .filter(Boolean)
 
