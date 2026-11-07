@@ -6,7 +6,10 @@ try {
 }
 const DIRECT_TAG = 'Direct'
 
-const SUBSCRIPTIONS = ['kt', 'lxy']
+const SUBSCRIPTIONS = String($arguments.subs ?? '')
+  .split(',')
+  .map(s => s.trim())
+  .filter(Boolean)
 
 const REGIONS = [
   ['HK', /香港|Hong Kong(?!.*\b(1\.\d+|[2-9]\d*)倍)/],
@@ -18,7 +21,7 @@ const REGIONS = [
 
 const GROUPS = {
   Proxy: ['*', DIRECT_TAG],
-  AI: ['*'],
+  AI: ['JP', 'KR', 'SG', 'US'],
   Games: ['*', DIRECT_TAG],
   GitHub: ['*', DIRECT_TAG],
   Google: ['*'],
