@@ -21,12 +21,13 @@ const REGIONS = [
 
 const GROUPS = {
   Proxy: ['*', DIRECT_TAG],
+  Final: [DIRECT_TAG, '*'],
   AI: ['JP', 'KR', 'SG', 'US'],
+  FCM: [DIRECT_TAG, '*'],
   Games: ['*', DIRECT_TAG],
-  GitHub: ['*', DIRECT_TAG],
+  Gits: ['*', DIRECT_TAG],
   Google: ['*'],
   Spotify: ['*', DIRECT_TAG],
-  // TikTok: ['JP'],
 }
 
 const allProxies = []
