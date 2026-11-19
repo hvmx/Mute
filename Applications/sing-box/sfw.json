@@ -12,6 +12,7 @@
                     "dns.google": ["8.8.8.8","8.8.4.4","2001:4860:4860::8888","2001:4860:4860::8844"]
                 }
             },
+            { "tag": "dns-local", "type": "local" },
             {
                 "tag": "dns-google",
                 "type": "https",
@@ -21,7 +22,7 @@
             },
             {
                 "tag": "dns-ali",
-                "type": "https",
+                "type": "quic",
                 "server": "dns.alidns.com",
                 "domain_resolver": "hosts"
             },
@@ -34,9 +35,11 @@
         ],
         "rules": [
             { "preferred_by": ["hosts"], "server": "hosts" },
-            { "rule_set": ["geosite-cn"], "server": "dns-ali" },
-            { "server": "fakeip" }
+            { "rule_set": [ "private" ], "server": "dns-local" },
+            { "rule_set": [ "ai", "games", "gits", "google", "youtube", "spotify", "proxy", "tld-proxy" ], "query_type": [ "A", "AAAA" ], "server": "fakeip" },
+            { "rule_set": [ "microsoft-cn", "cn"], "server": "dns-ali" }
         ],
+        "final": "dns-ali",
         "strategy": "prefer_ipv6",
         "optimistic": true,
         "reverse_mapping": true
@@ -58,7 +61,7 @@
         "auto_detect_interface": true,
         "default_http_client": "default-download",
         "default_domain_resolver": "dns-ali",
-        "final": "Proxy",
+        "final": "Final",
         "rules": [
             {
                 "type": "logical",
@@ -69,47 +72,50 @@
             },
             { "action": "sniff" },
             { "type": "logical", "mode": "or", "rules": [ { "protocol": [ "dns" ] }, { "port": 53 } ], "action": "hijack-dns" },
-            { "rule_set": "geosite-category-ai-!cn","outbound": "AI"},
-            { "rule_set": "geosite-category-games-!cn","outbound": "Games"},
-            { "rule_set": "geosite-github","outbound": "GitHub"},
-            { "rule_set": "geosite-google","outbound": "Google"},
-            { "rule_set": "geosite-spotify","outbound": "Spotify"},
-            { "rule_set": "geosite-geolocation-!cn", "outbound": "Proxy" },
-            { "rule_set": "geosite-cn","outbound": "Direct"},
+            { "rule_set": "private","outbound": "Direct"},
+            { "rule_set": "ai","outbound": "AI"},
+            { "rule_set": "games","outbound": "Games"},
+            { "rule_set": "gits","outbound": "Gits"},
+            { "rule_set": "google","outbound": "Google"},
+            { "rule_set": "youtube","outbound": "Google"},
+            { "rule_set": "microsoft-cn","outbound": "Microsoft"},
+            { "rule_set": "spotify","outbound": "Spotify"},
+            { "rule_set": "proxy", "outbound": "Proxy" },
+            { "rule_set": "tld-proxy", "outbound": "Proxy" },
+            { "rule_set": "cn","outbound": "Direct"},
             { "ip_is_private": true, "outbound": "Direct" },
-            { "rule_set": "geoip-cn", "outbound": "Direct" }
+            { "rule_set": "cncidr", "outbound": "Direct" }
         ],
         "rule_set": [
             {
                 "tag": [
-                    "geosite-category-ai-!cn",
-                    "geosite-category-games-!cn",
-                    "geosite-github",
-                    "geosite-google",
-                    "geosite-spotify",
-                    "geosite-cn",
-                    "geosite-geolocation-!cn"
+                    "ai",
+                    "cn",
+                    "cncidr",
+                    "games",
+                    "gits",
+                    "google",
+                    "microsoft-cn",
+                    "private",
+                    "proxy",
+                    "spotify",
+                    "tld-proxy",
+                    "youtube"
                 ],
                 "type": "remote",
                 "format": "binary",
-                "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/{tag}.srs"
-            },
-            {
-                "tag": [
-                    "geoip-cn"
-                ],
-                "type": "remote",
-                "format": "binary",
-                "url": "https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/{tag}.srs"
+                "url": "https://github.com/QuixoticHeart/rule-set/raw/refs/heads/ruleset/singbox/version5/{tag}.srs"
             }
         ]
     },
     "outbounds": [
         {"tag": "Proxy","type": "selector","outbounds": []},
+        {"tag": "Final","type": "selector","outbounds": []},
         {"tag": "AI","type": "selector","outbounds": []},
         {"tag": "Games","type": "selector","outbounds": []},
-        {"tag": "GitHub","type": "selector","outbounds": []},
+        {"tag": "Gits","type": "selector","outbounds": []},
         {"tag": "Google","type": "selector","outbounds": []},
+        {"tag": "Microsoft","type": "selector","outbounds": []},
         {"tag": "Spotify","type": "selector","outbounds": []},
         {"tag": "Direct","type": "direct"}
     ]
